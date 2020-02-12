@@ -48,7 +48,7 @@
         <poi-tl.version>1.6.0</poi-tl.version>
         <easyexcel.version>2.1.4</easyexcel.version>
         <servlet-api.version>2.5</servlet-api.version>
-        <rjfg.project.version>1.0.0</rjfg.project.version>
+        <rjgf.project.version>1.0.0</rjgf.project.version>
         <swagger.bootstrap.ui.version>1.9.6</swagger.bootstrap.ui.version>
     </properties>
 
@@ -201,27 +201,27 @@
 
             <!-- 本地项目 -->
             <dependency>
-                <groupId>com.rjfg</groupId>
-                <artifactId>rjfg-common</artifactId>
-                <version>${rjfg.project.version}</version>
+                <groupId>com.rjgf</groupId>
+                <artifactId>rjgf-common</artifactId>
+                <version>${rjgf.project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.rjgf</groupId>
                 <artifactId>rjgf-auth-api</artifactId>
-                <version>${rjfg.project.version}</version>
+                <version>${rjgf.project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.rjgf</groupId>
                 <artifactId>rjgf-auth</artifactId>
-                <version>${rjfg.project.version}</version>
+                <version>${rjgf.project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.rjgf</groupId>
                 <artifactId>rjgf-log-operation</artifactId>
-                <version>${rjfg.project.version}</version>
+                <version>${rjgf.project.version}</version>
             </dependency>
 
             <!-- 本地项目 -->

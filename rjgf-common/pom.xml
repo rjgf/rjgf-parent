@@ -9,10 +9,10 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.rjfg</groupId>
-    <artifactId>rjfg-common</artifactId>
+    <groupId>com.rjgf</groupId>
+    <artifactId>rjgf-common</artifactId>
     <version>1.0.0</version>
-    <name>rjfg-common</name>
+    <name>rjgf-common</name>
     <description>公共模块</description>
 
     <dependencies>
