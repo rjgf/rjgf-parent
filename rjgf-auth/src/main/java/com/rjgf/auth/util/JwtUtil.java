@@ -176,4 +176,13 @@ public class JwtUtil {
         return expireDate.before(new Date());
     }
 
+
+    /**
+     * 获取默认的密码
+     * @return
+     */
+    public static String getDefaultPwd() {
+        return jwtProperties.getDefaultPwd();
+    }
+
 }

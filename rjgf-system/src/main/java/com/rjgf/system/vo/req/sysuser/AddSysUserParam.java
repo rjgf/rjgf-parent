@@ -2,6 +2,7 @@ package com.rjgf.system.vo.req.sysuser;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -27,10 +28,10 @@ public class AddSysUserParam implements Serializable {
 
     @ApiModelProperty(value = "用户名")
     @NotBlank(message = "用户名不能为空")
-    private String username;
+    private String userName;
 
-    @ApiModelProperty(value = "昵称")
-    private String nickname;
+    @ApiModelProperty(value = "名字")
+    private String realName;
 
     @ApiModelProperty(value = "密码")
     @NotBlank(message = "密码不能为空")
@@ -50,13 +51,18 @@ public class AddSysUserParam implements Serializable {
     private Integer state;
 
     @ApiModelProperty(value = "部门id")
-    @NotNull(message = "部门id不能为空")
+//    @NotNull(message = "部门id不能为空")
     private Long departmentId;
 
     @ApiModelProperty(value = "角色id列表")
     @NotEmpty(message = "角色集合不能为空")
     @Size(max = 4, message = "角色集合超过上限")
     private List<Long> roleIds;
+
+    @ApiModelProperty(value = "城市配置列表")
+    @NotEmpty(message = "城市配置不能为空")
+    @Size(max = 4, message = "城市配置超过上限")
+    private List<Integer> areaIds;
 
     @ApiModelProperty(value = "备注")
     private String remark;

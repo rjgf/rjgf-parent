@@ -16,8 +16,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.rjfg</groupId>
-            <artifactId>rjfg-common</artifactId>
+            <groupId>com.rjgf</groupId>
+            <artifactId>rjgf-common</artifactId>
         </dependency>
 
         <dependency>

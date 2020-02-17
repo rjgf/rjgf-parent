@@ -14,46 +14,31 @@
  * limitations under the License.
  */
 
-package com.rjgf.system.entity;
+package com.rjgf.system.vo.req;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.rjgf.common.common.entity.BaseEntity;
-import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
- * <p>
- * IP地址
- * </p>
+ * 重置密码参数
  *
  * @author geekidea
- * @since 2019-10-11
- */
+ * @date 2019-10-27
+ **/
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "Ip对象", description = "IP地址")
-public class Ip extends BaseEntity {
+public class ResetPasswordParam {
 
-    private static final long serialVersionUID = 1L;
+    @ApiModelProperty("用户id")
+    @NotNull(message = "用户id不能为空")
+    private Long userId;
 
-    private String ipStart;
-
-    private String ipEnd;
-
-    private String area;
-
-    private String operator;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    private Long ipStartNum;
-
-    private Long ipEndNum;
+    @ApiModelProperty("新密码")
+    @NotEmpty(message = "新密码不能为空")
+    private String newPassword;
 
 }

@@ -22,8 +22,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.system.entity.Ip;
 import com.rjgf.system.vo.req.IpQueryParam;
 import com.rjgf.system.vo.resp.IpQueryVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
@@ -35,7 +35,7 @@ import java.io.Serializable;
  * @author geekidea
  * @since 2019-10-11
  */
-@Repository
+@Mapper
 public interface IpMapper extends BaseMapper<Ip> {
 
     /**

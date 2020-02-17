@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.log.entity.SysLog;
 import com.rjgf.log.vo.req.SysLogQueryParam;
 import com.rjgf.log.vo.resp.SysLogQueryVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +36,7 @@ import java.io.Serializable;
  * @author geekidea
  * @since 2019-10-11
  */
-@Repository
+@Mapper
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
     /**

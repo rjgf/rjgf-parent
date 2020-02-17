@@ -70,6 +70,7 @@
           and p.state = 1
           and u.id = #{userId}
         group by p.id
+        order by p.sort
     </select>
 
 </mapper>

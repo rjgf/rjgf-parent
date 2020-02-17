@@ -21,8 +21,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.rjfg</groupId>
-            <artifactId>rjfg-common</artifactId>
+            <groupId>com.rjgf</groupId>
+            <artifactId>rjgf-common</artifactId>
         </dependency>
 
         <dependency>
@@ -43,5 +43,20 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>rjgf-auth</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Null;
 import java.io.Serializable;
@@ -32,6 +33,7 @@ import java.util.Date;
  */
 @ApiModel("BaseEntity")
 @Data
+@Accessors(chain = true)
 public abstract class BaseEntity implements Serializable{
 
     @ApiModelProperty(value = "创建时间")

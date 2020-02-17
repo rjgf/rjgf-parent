@@ -25,6 +25,7 @@ import com.rjgf.system.vo.req.SysUserQueryParam;
 import com.rjgf.system.vo.req.UpdatePasswordParam;
 import com.rjgf.system.vo.req.sysuser.AddSysUserParam;
 import com.rjgf.system.vo.req.sysuser.UpdateSysUserParam;
+import com.rjgf.system.vo.resp.SysUserInfoQueryVo;
 import com.rjgf.system.vo.resp.SysUserQueryVo;
 
 import java.io.Serializable;
@@ -74,7 +75,7 @@ public interface ISysUserService extends CommonService<SysUser> {
      * @return
      * @throws Exception
      */
-    SysUserQueryVo getSysUserById(Serializable id) throws Exception;
+    SysUserInfoQueryVo getSysUserById(Long id) throws Exception;
 
     /**
      * 获取分页对象
@@ -122,14 +123,13 @@ public interface ISysUserService extends CommonService<SysUser> {
     boolean updatePassword(UpdatePasswordParam updatePasswordParam) throws Exception;
 
     /**
-     * 修改系统用户头像
-     *
-     * @param id
-     * @param headPath
+     * 重置密码
+     * @param
+     * @param userId
      * @return
      * @throws Exception
      */
-    boolean updateSysUserHead(Long id, String headPath) throws Exception;
+    boolean resetPassword(Long userId) throws Exception;
 
     /**
      * 获取用户信息

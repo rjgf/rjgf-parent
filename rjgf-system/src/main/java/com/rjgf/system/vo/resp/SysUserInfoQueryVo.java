@@ -14,58 +14,43 @@
  * limitations under the License.
  */
 
-package com.rjgf.system.entity;
+package com.rjgf.system.vo.resp;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.Version;
-import com.rjgf.common.common.entity.BaseEntity;
+import com.rjgf.system.entity.SysArea;
+import com.rjgf.system.entity.SysRole;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <pre>
- * 系统用户
+ * 系统用户 查询结果对象
  * </pre>
- *
- * @author geekidea
- * @since 2019-10-24
+ * @author xula
+ * @date 2020-2-13
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUser对象", description = "系统用户")
-public class SysUser extends BaseEntity {
+@ApiModel(value = "SysUserQueryVo对象", description = "系统用户查询参数")
+public class SysUserInfoQueryVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-
     @ApiModelProperty(value = "用户名")
-    @NotBlank(message = "用户名不能为空")
     private String userName;
 
-    @ApiModelProperty(value = "真实名字")
+    @ApiModelProperty(value = "名字")
     private String realName;
 
-    @ApiModelProperty(value = "密码")
-    @NotBlank(message = "密码不能为空")
-    private String password;
-
-    @ApiModelProperty(value = "盐值")
-    private String  salt;
-
     @ApiModelProperty(value = "手机号码")
-    @NotBlank(message = "手机号码不能为空")
     private String phone;
 
     @ApiModelProperty(value = "性别，0：女，1：男，默认1")
@@ -78,17 +63,11 @@ public class SysUser extends BaseEntity {
     private Integer state;
 
     @ApiModelProperty(value = "部门id")
-//    @NotNull(message = "部门id不能为空")
     private Long departmentId;
 
-    @ApiModelProperty(value = "版本")
-    @Null(message = "版本不用传")
-    private Integer version;
+    @ApiModelProperty(value = "角色列表")
+    private List<SysRole> sysRoles;
 
-    @ApiModelProperty(value = "电子邮箱")
-    @Null(message = "电子邮箱")
-    private String email;
-
-    @ApiModelProperty(value = "备注")
-    private String remark;
+    @ApiModelProperty(value = "城市配置列表")
+    private List<SysArea> sysAreas;
 }

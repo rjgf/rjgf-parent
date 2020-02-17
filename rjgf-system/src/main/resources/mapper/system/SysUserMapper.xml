@@ -18,23 +18,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rjgf.system.mapper.SysUserMapper">
 
+    <resultMap id="sysUserMap" type="com.rjgf.system.vo.resp.SysUserQueryVo">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="phone" property="phone"/>
+        <result column="real_name" property="realName"/>
+        <result column="email" property="email"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="gender" property="gender"/>
+        <collection property="sysRoles" ofType="string">
+            <result column="sys_role_name"/>
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, phone,email, gender, head, remark, state, department_id, deleted, version, create_time, update_time
+        id, user_name, real_name, phone,email, gender, head, remark, state, department_id, deleted, version, create_time, update_time
     </sql>
 
-    <select id="getSysUserById" resultType="com.rjgf.system.vo.resp.SysUserQueryVo">
+    <select id="getSysUserById" resultType="com.rjgf.system.vo.resp.SysUserInfoQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_user
         where deleted = 0 and id = #{id}
     </select>
 
-    <select id="getSysUserPageList" resultType="com.rjgf.system.vo.resp.SysUserQueryVo">
+    <select id="getSysUserPageList" resultMap="sysUserMap">
         select
-        <include refid="Base_Column_List"/>
-        from sys_user
-        where deleted = 0
+        s.id, s.user_name, s.real_name, s.phone,email, s.gender, s.state, s.create_time , r.name as sys_role_name
+        from sys_user s join sys_user_role b on (s.id = b.user_id) join sys_role r on (b.role_id = r.id)
+        where s.deleted = 0
+        <if test="param.realName != null and param.realName != ''">
+            AND s.real_name like  CONCAT('%', #{param.realName}, '%')
+        </if>
+        <if test="param.roleId != null and param.roleId != '' ">
+            AND r.id = #{param.roleId}
+        </if>
+        <if test="param.state != null and param.state != '' ">
+            AND s.state = #{param.state}
+        </if>
     </select>
 
 

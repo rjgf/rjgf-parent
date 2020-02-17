@@ -34,7 +34,7 @@ public class LoginParam {
 
     @NotBlank(message = "请输入账号")
     @ApiModelProperty("账号")
-    private String username;
+    private String userName;
 
     @NotBlank(message = "请输入密码")
     @ApiModelProperty("密码")

@@ -76,7 +76,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // 盐值
         String salt = jwtToken.getSalt();
         // 登陆用户名称
-        String username = loginSysUserVo.getUsername();
+        String username = loginSysUserVo.getUserName();
         // token md5值
         String tokenMd5 = DigestUtils.md5Hex(token);
 

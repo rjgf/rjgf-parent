@@ -26,6 +26,7 @@ import com.rjgf.system.vo.req.SysUserQueryParam;
 import com.rjgf.system.vo.req.UpdatePasswordParam;
 import com.rjgf.system.vo.req.sysuser.AddSysUserParam;
 import com.rjgf.system.vo.req.sysuser.UpdateSysUserParam;
+import com.rjgf.system.vo.resp.SysUserInfoQueryVo;
 import com.rjgf.system.vo.resp.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -91,9 +92,9 @@ public class SysUserController extends BaseController {
      */
     @GetMapping("/info/{id}")
     @RequiresPermissions("sys:user:info")
-    @ApiOperation(value = "获取SysUser对象详情", notes = "查看系统用户",response = SysUserQueryVo.class)
-    public R<SysUserQueryVo> getSysUser(@PathVariable("id") Long id) throws Exception {
-        SysUserQueryVo sysUserQueryVo = sysUserService.getSysUserById(id);
+    @ApiOperation(value = "获取SysUser对象详情", notes = "查看系统用户",response = SysUserInfoQueryVo.class)
+    public R<SysUserInfoQueryVo> getSysUser(@PathVariable("id") Long id) throws Exception {
+        SysUserInfoQueryVo sysUserQueryVo = sysUserService.getSysUserById(id);
         return R.ok(sysUserQueryVo);
     }
 
@@ -116,6 +117,17 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "修改密码", notes = "修改密码")
     public R updatePassword(@Valid @RequestBody UpdatePasswordParam updatePasswordParam) throws Exception {
         boolean flag = sysUserService.updatePassword(updatePasswordParam);
+        return R.ok(flag);
+    }
+
+    /**
+     * 重置密码
+     */
+    @PostMapping("/resetPassword/{userId}")
+//    @RequiresPermissions("sys:user:update:password")
+    @ApiOperation(value = "重置密码", notes = "重置密码")
+    public R resetPassword(@Valid @PathVariable Long userId) throws Exception {
+        boolean flag = sysUserService.resetPassword(userId);
         return R.ok(flag);
     }
 }

@@ -19,7 +19,7 @@
         <module>rjgf-auth-api</module>
         <module>rjgf-auth</module>
         <module>rjgf-system</module>
-        <module>rjfg-common</module>
+        <module>rjgf-common</module>
     </modules>
 
     <properties>

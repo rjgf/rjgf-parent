@@ -80,7 +80,7 @@ public class LoginUtil {
         if (loginSysUserRedisVo == null) {
             return null;
         }
-        return loginSysUserRedisVo.getUsername();
+        return loginSysUserRedisVo.getUserName();
     }
 
 }

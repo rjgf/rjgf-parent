@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.system.entity.SysRolePermission;
 import com.rjgf.system.vo.req.SysRolePermissionQueryParam;
 import com.rjgf.system.vo.resp.SysRolePermissionQueryVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -38,7 +39,7 @@ import java.util.Set;
  * @author geekidea
  * @since 2019-10-24
  */
-@Repository
+@Mapper
 public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
 
     /**

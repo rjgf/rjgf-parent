@@ -19,6 +19,7 @@ package com.rjgf.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rjgf.system.entity.SysRole;
 import com.rjgf.system.entity.SysUserRole;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,7 +32,7 @@ import java.util.List;
  * @author geekidea
  * @since 2019-10-24
  */
-@Repository
+@Mapper
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**

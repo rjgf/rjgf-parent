@@ -31,10 +31,10 @@ public class UpdateSysUserParam implements Serializable {
 
     @ApiModelProperty(value = "用户名")
     @NotBlank(message = "用户名不能为空")
-    private String username;
+    private String userName;
 
     @ApiModelProperty(value = "昵称")
-    private String nickname;
+    private String realName;
 
     @ApiModelProperty(value = "密码")
     @NotBlank(message = "密码不能为空")
@@ -61,6 +61,11 @@ public class UpdateSysUserParam implements Serializable {
     @NotEmpty(message = "角色集合不能为空")
     @Size(max = 4, message = "角色集合超过上限")
     private List<Long> roleIds;
+
+    @ApiModelProperty(value = "城市配置列表")
+    @NotEmpty(message = "城市配置不能为空")
+    @Size(max = 4, message = "城市配置超过上限")
+    private List<Integer> areaIds;
 
     @ApiModelProperty(value = "备注")
     private String remark;

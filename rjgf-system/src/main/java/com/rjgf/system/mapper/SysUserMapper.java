@@ -22,7 +22,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.system.entity.SysUser;
 import com.rjgf.system.vo.req.SysUserQueryParam;
+import com.rjgf.system.vo.resp.SysUserInfoQueryVo;
 import com.rjgf.system.vo.resp.SysUserQueryVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -37,7 +39,7 @@ import java.util.List;
  * @author geekidea
  * @since 2019-10-24
  */
-@Repository
+@Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
@@ -46,7 +48,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param id
      * @return
      */
-    SysUserQueryVo getSysUserById(Serializable id);
+    SysUserInfoQueryVo getSysUserById(Serializable id);
 
     /**
      * 获取分页对象

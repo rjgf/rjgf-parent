@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.system.entity.SysDepartment;
 import com.rjgf.system.vo.req.SysDepartmentQueryParam;
 import com.rjgf.system.vo.resp.SysDepartmentQueryVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +37,7 @@ import java.io.Serializable;
  * @author geekidea
  * @since 2019-10-24
  */
-@Repository
+@Mapper
 public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
 
     /**

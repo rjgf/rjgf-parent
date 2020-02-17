@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.system.entity.SysRole;
 import com.rjgf.system.vo.req.SysRoleQueryParam;
 import com.rjgf.system.vo.resp.SysRoleQueryVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +36,7 @@ import java.io.Serializable;
  * @author geekidea
  * @since 2019-10-24
  */
-@Repository
+@Mapper
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     /**

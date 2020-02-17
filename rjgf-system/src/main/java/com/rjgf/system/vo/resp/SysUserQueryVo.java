@@ -44,10 +44,10 @@ public class SysUserQueryVo implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "用户名")
-    private String username;
+    private String userName;
 
-    @ApiModelProperty(value = "昵称")
-    private String nickname;
+    @ApiModelProperty(value = "用户名字")
+    private String realName;
 
     @ApiModelProperty(value = "手机号码")
     private String phone;
@@ -77,6 +77,5 @@ public class SysUserQueryVo implements Serializable {
     private Date updateTime;
 
     @ApiModelProperty(value = "角色列表")
-    private List<SysRole> sysRoles;
-
+    private List<String> sysRoles;
 }

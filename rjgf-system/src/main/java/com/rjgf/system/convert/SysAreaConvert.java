@@ -14,40 +14,31 @@
  * limitations under the License.
  */
 
-package com.rjgf.system.vo.resp;
+package com.rjgf.system.convert;
 
-import io.swagger.annotations.ApiModel;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import com.rjgf.system.entity.SysArea;
+import com.rjgf.system.vo.resp.SysAreaTreeVo;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
- * <p>
- * IP地址 查询结果对象
- * </p>
+ * 省市区转换器
  *
  * @author geekidea
- * @date 2019-10-11
- */
-@Data
-@Accessors(chain = true)
-@ApiModel(value = "IpQueryVo对象", description = "IP地址查询参数")
-public class IpQueryVo implements Serializable {
-    private static final long serialVersionUID = 1L;
+ * @date 2019-10-05
+ **/
+@Mapper
+public interface SysAreaConvert {
 
-private String ipStart;
+    SysAreaConvert INSTANCE = Mappers.getMapper(SysAreaConvert.class);
 
-private String ipEnd;
-
-private String area;
-
-private String operator;
-
-private Long id;
-
-private Long ipStartNum;
-
-private Long ipEndNum;
-
+    /**
+     * sysAreas列表转换成SysAreaTreeVo列表
+     *
+     * @param sysAreas
+     * @return
+     */
+    List<SysAreaTreeVo> listToTreeVoList(List<SysArea> sysAreas);
 }

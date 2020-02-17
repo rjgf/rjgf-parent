@@ -86,4 +86,10 @@ public class JwtProperties {
      */
     private boolean saltCheck;
 
+
+    /**
+     * 默认的密码
+     */
+    private String defaultPwd;
+
 }

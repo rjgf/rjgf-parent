@@ -43,10 +43,10 @@ public class LoginSysUserVo implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "用户名")
-    private String username;
+    private String userName;
 
     @ApiModelProperty(value = "昵称")
-    private String nickname;
+    private String realName;
 
     @ApiModelProperty(value = "性别，0：女，1：男，默认1")
     private Integer gender;

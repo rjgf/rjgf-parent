@@ -80,9 +80,9 @@ public class AuthServiceImpl implements AuthService {
 
         // 校验验证码
         checkVerifyCode(loginParam.getUuid(), loginParam.getCode());
-        String username = loginParam.getUsername();
+        String userName = loginParam.getUserName();
         String password = loginParam.getPassword();
-        LoginSysUserVo loginSysUserVo = iLoginService.login(username,password);
+        LoginSysUserVo loginSysUserVo = iLoginService.login(userName,password);
 
         // 创建 token
         // 获取数据库中保存的盐值
@@ -90,11 +90,11 @@ public class AuthServiceImpl implements AuthService {
 
         // 生成token字符串并返回
         Long expireSecond = jwtProperties.getExpireSecond();
-        String token = JwtUtil.generateToken(username, newSalt, Duration.ofSeconds(expireSecond));
+        String token = JwtUtil.generateToken(userName, newSalt, Duration.ofSeconds(expireSecond));
         log.debug("token:{}", token);
 
         // 创建AuthenticationToken
-        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
+        JwtToken jwtToken = JwtToken.build(token, userName, newSalt, expireSecond);
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
         // 执行认证登陆
@@ -102,7 +102,7 @@ public class AuthServiceImpl implements AuthService {
 
         // 缓存登陆信息到Redis
         loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
-        log.debug("登陆成功,username:{}", username);
+        log.debug("登陆成功,username:{}", userName);
 
         // 返回token和登陆用户信息对象
         LoginSysUserTokenVo loginSysUserTokenVo = new LoginSysUserTokenVo();

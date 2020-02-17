@@ -17,6 +17,8 @@
 package com.rjgf.system.vo.req;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -33,4 +35,13 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
 public class SysUserQueryParam {
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(name = "姓名", notes = "用户名字")
+    private String realName;
+
+    @ApiModelProperty(name = "角色", notes = "角色编号")
+    private Long roleId;
+
+    @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
+    private Integer state;
 }
