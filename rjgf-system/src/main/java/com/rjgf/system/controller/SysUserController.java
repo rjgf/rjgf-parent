@@ -19,6 +19,7 @@ package com.rjgf.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.common.common.api.R;
+import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.controller.BaseController;
 import com.rjgf.system.service.ISysUserService;
@@ -104,7 +105,7 @@ public class SysUserController extends BaseController {
     @PostMapping("")
     @RequiresPermissions("sys:user")
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表")
-    public R<PageResponse<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserQueryParam sysUserQueryParam, Page page) throws Exception {
+    public R<PageResponse<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserQueryParam sysUserQueryParam, PageRequest page) throws Exception {
         IPage<SysUserQueryVo> paging = sysUserService.getSysUserPage(sysUserQueryParam,page);
         return R.page(paging);
     }

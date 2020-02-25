@@ -57,7 +57,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param sysUserQueryParam
      * @return
      */
-    IPage<SysUserQueryVo> getSysUserPageList(@Param("page") Page page, @Param("param") SysUserQueryParam sysUserQueryParam);
+    IPage<SysUserQueryVo> getSysUserPageList(@Param("page") IPage page, @Param("param") SysUserQueryParam sysUserQueryParam);
 
 
     /**

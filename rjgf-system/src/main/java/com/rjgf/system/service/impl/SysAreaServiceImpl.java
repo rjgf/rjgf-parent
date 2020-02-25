@@ -28,14 +28,14 @@ public class SysAreaServiceImpl extends CommonServiceImpl<SysAreaMapper, SysArea
 
     @Override
     public List<SysAreaTreeVo> getSysAreaTree() {
-        List<SysArea> sysAreas = getBaseSysArea(-1);
+        List<SysArea> sysAreas = getBaseSysArea(18);
         return convertSysArea(sysAreas);
     }
 
     private List<SysAreaTreeVo> convertSysArea(List<SysArea> sysAreas) {
         List<SysAreaTreeVo> sysAreaTreeVos = SysAreaConvert.INSTANCE.listToTreeVoList(sysAreas);
         for (SysAreaTreeVo sysAreaTreeVo:sysAreaTreeVos) {
-            List<SysArea> sysAreas1 = getBaseSysArea(sysAreaTreeVo.getAreaId());
+            List<SysArea> sysAreas1 = getBaseSysArea(sysAreaTreeVo.getId());
             if (CollectionUtils.isNotEmpty(sysAreas)) {
                 sysAreaTreeVo.setChildren(convertSysArea(sysAreas1));
             }

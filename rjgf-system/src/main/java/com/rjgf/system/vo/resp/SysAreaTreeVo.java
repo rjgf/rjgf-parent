@@ -29,7 +29,7 @@ public class SysAreaTreeVo implements Serializable {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer areaId;
+    private Integer id;
 
     @ApiModelProperty(value = "省市县")
     private String name;

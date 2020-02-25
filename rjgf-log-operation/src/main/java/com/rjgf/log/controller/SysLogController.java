@@ -18,6 +18,7 @@ package com.rjgf.log.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.common.common.api.R;
+import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.controller.BaseController;
 import com.rjgf.log.service.ISysLogService;
@@ -77,11 +78,7 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("")
     @ApiOperation(value = "获取SysLog分页列表", notes = "系统日志分页列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "size", value = "每页显示数量",dataType="int"),
-            @ApiImplicitParam(paramType = "query", name = "current", value = "当前页",dataType="int")
-    })
-    public R<PageResponse<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogQueryParam sysLogQueryParam, Page page) throws Exception {
+    public R<PageResponse<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogQueryParam sysLogQueryParam, PageRequest page) throws Exception {
         Page<SysLogQueryVo> paging = sysLogService.getSysLogPage(sysLogQueryParam,page);
         return R.page(paging);
     }

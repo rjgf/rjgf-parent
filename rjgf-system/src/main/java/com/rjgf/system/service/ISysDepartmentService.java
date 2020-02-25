@@ -20,6 +20,7 @@ package com.rjgf.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.service.CommonService;
 import com.rjgf.system.entity.SysDepartment;
 import com.rjgf.system.vo.req.SysDepartmentQueryParam;
@@ -82,7 +83,7 @@ public interface ISysDepartmentService extends CommonService<SysDepartment> {
      * @return
      * @throws Exception
      */
-    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentQueryParam sysDepartmentQueryParam, Page page) throws Exception;
+    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentQueryParam sysDepartmentQueryParam, PageRequest page) throws Exception;
 
     /**
      * 根据id校验部门是否存在并且已启用

@@ -26,22 +26,22 @@ public class AddSysUserParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名",required = true)
     @NotBlank(message = "用户名不能为空")
     private String userName;
 
-    @ApiModelProperty(value = "名字")
+    @ApiModelProperty(value = "名字",required = true)
     private String realName;
 
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "密码",required = true)
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    @ApiModelProperty(value = "手机号码")
+    @ApiModelProperty(value = "手机号码",required = true)
     @NotBlank(message = "手机号码不能为空")
     private String phone;
 
-    @ApiModelProperty(value = "性别，0：女，1：男，默认1")
+    @ApiModelProperty(value = "性别，0：女，1：男，默认1",required = true)
     private Integer gender;
 
     @ApiModelProperty(value = "头像")
@@ -54,12 +54,12 @@ public class AddSysUserParam implements Serializable {
 //    @NotNull(message = "部门id不能为空")
     private Long departmentId;
 
-    @ApiModelProperty(value = "角色id列表")
+    @ApiModelProperty(value = "角色id列表",required = true)
     @NotEmpty(message = "角色集合不能为空")
     @Size(max = 4, message = "角色集合超过上限")
     private List<Long> roleIds;
 
-    @ApiModelProperty(value = "城市配置列表")
+    @ApiModelProperty(value = "城市配置列表",required = true)
     @NotEmpty(message = "城市配置不能为空")
     @Size(max = 4, message = "城市配置超过上限")
     private List<Integer> areaIds;

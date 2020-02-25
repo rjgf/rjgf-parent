@@ -54,6 +54,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param sysRoleQueryParam
      * @return
      */
-    IPage<SysRoleQueryVo> getSysRolePageList(@Param("page") Page page, @Param("param") SysRoleQueryParam sysRoleQueryParam);
+    IPage<SysRoleQueryVo> getSysRolePageList(@Param("page") IPage page, @Param("param") SysRoleQueryParam sysRoleQueryParam);
 
 }

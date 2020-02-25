@@ -82,7 +82,7 @@ public interface ISysRoleService extends CommonService<SysRole> {
      * @return
      * @throws Exception
      */
-    IPage<SysRoleQueryVo> getSysRolePage(SysRoleQueryParam sysRoleQueryParam, Page page) throws Exception;
+    IPage<SysRoleQueryVo> getSysRolePage(SysRoleQueryParam sysRoleQueryParam, IPage page) throws Exception;
 
     /**
      * 根据id校验角色是否存在并且已启用

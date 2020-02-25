@@ -84,7 +84,7 @@ public interface ISysUserService extends CommonService<SysUser> {
      * @return
      * @throws Exception
      */
-    IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam, Page page) throws Exception;
+    IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam, IPage page) throws Exception;
 
     /**
      * 判断用户名是否存在

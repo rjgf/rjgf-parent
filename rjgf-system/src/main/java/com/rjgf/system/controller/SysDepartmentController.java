@@ -19,6 +19,7 @@ package com.rjgf.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.api.R;
 import com.rjgf.common.common.controller.BaseController;
@@ -101,10 +102,10 @@ public class SysDepartmentController extends BaseController {
     /**
      * 部门分页列表
      */
-    @PostMapping("/getPageList")
+    @PostMapping("")
     @RequiresPermissions("sys:department:page")
     @ApiOperation(value = "获取SysDepartment分页列表", notes = "部门分页列表")
-    public R<PageResponse<SysDepartmentQueryVo>> getSysDepartmentPageList(@Valid @RequestBody SysDepartmentQueryParam sysDepartmentQueryParam, Page page) throws Exception {
+    public R<PageResponse<SysDepartmentQueryVo>> getSysDepartmentPageList(PageRequest page,@Valid @RequestBody SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
         IPage<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentQueryParam, page);
         return R.page(paging);
     }

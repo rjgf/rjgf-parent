@@ -11,10 +11,10 @@ import java.util.List;
 public class PageResponse<T> implements Serializable {
 
     @ApiModelProperty(value = "当前页码")
-    private long current;
+    private long pageNo;
 
-    @ApiModelProperty(value = "页数量")
-    private long size;
+    @ApiModelProperty(value = "每页显示的数量")
+    private long pageSize;
 
     @ApiModelProperty(value = "数量总数")
     private long total;
@@ -24,8 +24,8 @@ public class PageResponse<T> implements Serializable {
 
     @SuppressWarnings("deprecation")
     public PageResponse(IPage<T> iPage) {
-        this.current = iPage.getCurrent();
-        this.size = iPage.getSize();
+        this.pageNo = iPage.getCurrent();
+        this.pageSize = iPage.getSize();
         this.total = iPage.getTotal();
         this.records = iPage.getRecords();
     }

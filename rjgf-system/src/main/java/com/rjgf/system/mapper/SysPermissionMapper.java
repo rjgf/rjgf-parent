@@ -55,7 +55,7 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @param sysPermissionQueryParam
      * @return
      */
-    IPage<SysPermissionQueryVo> getSysPermissionPageList(@Param("page") Page page, @Param("param") SysPermissionQueryParam sysPermissionQueryParam);
+    IPage<SysPermissionQueryVo> getSysPermissionPageList(@Param("page") IPage page, @Param("param") SysPermissionQueryParam sysPermissionQueryParam);
 
     /**
      * 根据用户id获取该用户所有权限编码

@@ -18,6 +18,7 @@ package com.rjgf.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.api.R;
 import com.rjgf.common.common.controller.BaseController;
@@ -104,7 +105,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("")
     @RequiresPermissions("sys:permission")
     @ApiOperation(value = "获取SysPermission分页列表", notes = "系统权限分页列表")
-    public R<PageResponse<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam, Page page) throws Exception {
+    public R<PageResponse<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam, PageRequest page) throws Exception {
         IPage<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPage(sysPermissionQueryParam,page);
         return R.page(paging);
     }

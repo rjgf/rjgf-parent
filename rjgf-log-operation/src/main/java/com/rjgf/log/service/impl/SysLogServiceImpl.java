@@ -16,6 +16,7 @@
 
 package com.rjgf.log.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.log.entity.SysLog;
@@ -51,7 +52,7 @@ public class SysLogServiceImpl extends CommonServiceImpl<SysLogMapper, SysLog> i
     }
 
     @Override
-    public Page<SysLogQueryVo> getSysLogPage(SysLogQueryParam sysLogQueryParam, Page page) throws Exception {
+    public Page<SysLogQueryVo> getSysLogPage(SysLogQueryParam sysLogQueryParam, IPage page) throws Exception {
         return sysLogMapper.getSysLogPageList(page, sysLogQueryParam);
     }
 

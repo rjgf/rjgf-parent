@@ -18,6 +18,7 @@ package com.rjgf.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.api.R;
 import com.rjgf.common.common.controller.BaseController;
@@ -104,7 +105,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("")
     @RequiresPermissions("sys:role")
     @ApiOperation(value = "获取SysRole分页列表", notes = "系统角色分页列表")
-    public R<PageResponse<SysRoleQueryVo>> getSysRolePageList(@Valid @RequestBody SysRoleQueryParam sysRoleQueryParam, Page page) throws Exception {
+    public R<PageResponse<SysRoleQueryVo>> getSysRolePageList(@Valid @RequestBody SysRoleQueryParam sysRoleQueryParam, PageRequest page) throws Exception {
         IPage<SysRoleQueryVo> paging = sysRoleService.getSysRolePage(sysRoleQueryParam,page);
         return R.page(paging);
     }

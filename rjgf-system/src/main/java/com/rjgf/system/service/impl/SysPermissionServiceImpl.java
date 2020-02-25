@@ -110,7 +110,7 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
     }
 
     @Override
-    public IPage<SysPermissionQueryVo> getSysPermissionPage(SysPermissionQueryParam sysPermissionQueryParam, Page page) throws Exception {
+    public IPage<SysPermissionQueryVo> getSysPermissionPage(SysPermissionQueryParam sysPermissionQueryParam, IPage page) throws Exception {
         return sysPermissionMapper.getSysPermissionPageList(page, sysPermissionQueryParam);
     }
 

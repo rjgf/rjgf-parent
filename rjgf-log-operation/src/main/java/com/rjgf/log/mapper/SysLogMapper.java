@@ -54,6 +54,6 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
      * @param sysLogQueryParam
      * @return
      */
-    Page<SysLogQueryVo> getSysLogPageList(@Param("page") Page page, @Param("param") SysLogQueryParam sysLogQueryParam);
+    Page<SysLogQueryVo> getSysLogPageList(@Param("page") IPage page, @Param("param") SysLogQueryParam sysLogQueryParam);
 
 }
