@@ -52,7 +52,8 @@ public class SysLogServiceImpl extends CommonServiceImpl<SysLogMapper, SysLog> i
     }
 
     @Override
-    public Page<SysLogQueryVo> getSysLogPage(SysLogQueryParam sysLogQueryParam, IPage page) throws Exception {
+    public Page<SysLogQueryVo> getSysLogPage(SysLogQueryParam sysLogQueryParam) throws Exception {
+        IPage page = new Page(sysLogQueryParam.getPageNo(),sysLogQueryParam.getPageSize());
         return sysLogMapper.getSysLogPageList(page, sysLogQueryParam);
     }
 

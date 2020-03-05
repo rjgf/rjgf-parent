@@ -80,7 +80,7 @@ public interface ISysPermissionService extends CommonService<SysPermission> {
      * @return
      * @throws Exception
      */
-    IPage<SysPermissionQueryVo> getSysPermissionPage(SysPermissionQueryParam sysPermissionQueryParam, IPage page) throws Exception;
+    IPage<SysPermissionQueryVo> getSysPermissionPage(SysPermissionQueryParam sysPermissionQueryParam) throws Exception;
 
     /**
      * 判断权限id是否存在

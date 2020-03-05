@@ -185,7 +185,8 @@ public class SysRoleServiceImpl extends CommonServiceImpl<SysRoleMapper, SysRole
     }
 
     @Override
-    public IPage<SysRoleQueryVo> getSysRolePage(SysRoleQueryParam sysRoleQueryParam, IPage page) throws Exception {
+    public IPage<SysRoleQueryVo> getSysRolePage(SysRoleQueryParam sysRoleQueryParam) throws Exception {
+        Page page = new Page(sysRoleQueryParam.getPageNo(),sysRoleQueryParam.getPageSize());
         return sysRoleMapper.getSysRolePageList(page, sysRoleQueryParam);
     }
 

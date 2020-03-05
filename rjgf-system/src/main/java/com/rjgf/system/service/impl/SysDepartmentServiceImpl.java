@@ -19,7 +19,7 @@ package com.rjgf.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rjgf.common.common.api.req.PageRequest;
+import com.rjgf.common.common.api.req.PageParam;
 import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.system.convert.SysDepartmentConvert;
@@ -80,8 +80,9 @@ public class SysDepartmentServiceImpl extends CommonServiceImpl<SysDepartmentMap
     }
 
     @Override
-    public IPage<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentQueryParam sysDepartmentQueryParam, PageRequest page) throws Exception {
-        return sysDepartmentMapper.getSysDepartmentPageList(page, sysDepartmentQueryParam);
+    public IPage<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
+        Page page = new Page(sysDepartmentQueryParam.getPageNo(),sysDepartmentQueryParam.getPageSize());
+        return sysDepartmentMapper.getSysDepartmentPageList(page,sysDepartmentQueryParam);
     }
 
     @Override

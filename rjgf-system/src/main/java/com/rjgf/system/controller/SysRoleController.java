@@ -105,8 +105,8 @@ public class SysRoleController extends BaseController {
     @PostMapping("")
     @RequiresPermissions("sys:role")
     @ApiOperation(value = "获取SysRole分页列表", notes = "系统角色分页列表")
-    public R<PageResponse<SysRoleQueryVo>> getSysRolePageList(@Valid @RequestBody SysRoleQueryParam sysRoleQueryParam, PageRequest page) throws Exception {
-        IPage<SysRoleQueryVo> paging = sysRoleService.getSysRolePage(sysRoleQueryParam,page);
+    public R<PageResponse<SysRoleQueryVo>> getSysRolePageList(@Valid @RequestBody SysRoleQueryParam sysRoleQueryParam) throws Exception {
+        IPage<SysRoleQueryVo> paging = sysRoleService.getSysRolePage(sysRoleQueryParam);
         return R.page(paging);
     }
 

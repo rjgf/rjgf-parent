@@ -83,7 +83,7 @@ public interface ISysDepartmentService extends CommonService<SysDepartment> {
      * @return
      * @throws Exception
      */
-    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentQueryParam sysDepartmentQueryParam, PageRequest page) throws Exception;
+    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception;
 
     /**
      * 根据id校验部门是否存在并且已启用

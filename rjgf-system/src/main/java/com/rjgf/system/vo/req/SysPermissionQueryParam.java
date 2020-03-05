@@ -16,6 +16,7 @@
 
 package com.rjgf.system.vo.req;
 
+import com.rjgf.common.common.api.req.PageParam;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -31,6 +32,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "SysPermissionQueryParam对象", description = "系统权限查询参数")
-public class SysPermissionQueryParam  {
+public class SysPermissionQueryParam extends PageParam {
     private static final long serialVersionUID = 1L;
 }

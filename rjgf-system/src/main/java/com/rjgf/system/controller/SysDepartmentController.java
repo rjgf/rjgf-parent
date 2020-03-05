@@ -106,7 +106,7 @@ public class SysDepartmentController extends BaseController {
     @RequiresPermissions("sys:department:page")
     @ApiOperation(value = "获取SysDepartment分页列表", notes = "部门分页列表")
     public R<PageResponse<SysDepartmentQueryVo>> getSysDepartmentPageList(PageRequest page,@Valid @RequestBody SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
-        IPage<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentQueryParam, page);
+        IPage<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentQueryParam);
         return R.page(paging);
     }
 

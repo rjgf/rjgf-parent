@@ -51,6 +51,6 @@ public interface ISysLogService extends CommonService<SysLog> {
      * @param sysLogQueryParam
      * @return
      */
-    Page<SysLogQueryVo> getSysLogPage(SysLogQueryParam sysLogQueryParam, IPage page) throws Exception;
+    Page<SysLogQueryVo> getSysLogPage(SysLogQueryParam sysLogQueryParam) throws Exception;
 
 }

@@ -16,6 +16,7 @@
 
 package com.rjgf.system.vo.req;
 
+import com.rjgf.common.common.api.req.PageParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
@@ -33,7 +34,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
-public class SysUserQueryParam {
+public class SysUserQueryParam extends PageParam {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(name = "姓名", notes = "用户名字")

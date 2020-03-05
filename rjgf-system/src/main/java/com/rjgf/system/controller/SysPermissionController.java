@@ -105,8 +105,8 @@ public class SysPermissionController extends BaseController {
     @PostMapping("")
     @RequiresPermissions("sys:permission")
     @ApiOperation(value = "获取SysPermission分页列表", notes = "系统权限分页列表")
-    public R<PageResponse<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam, PageRequest page) throws Exception {
-        IPage<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPage(sysPermissionQueryParam,page);
+    public R<PageResponse<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
+        IPage<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPage(sysPermissionQueryParam);
         return R.page(paging);
     }
 

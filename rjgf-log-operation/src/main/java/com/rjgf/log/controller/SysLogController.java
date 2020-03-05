@@ -78,8 +78,8 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("")
     @ApiOperation(value = "获取SysLog分页列表", notes = "系统日志分页列表")
-    public R<PageResponse<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogQueryParam sysLogQueryParam, PageRequest page) throws Exception {
-        Page<SysLogQueryVo> paging = sysLogService.getSysLogPage(sysLogQueryParam,page);
+    public R<PageResponse<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogQueryParam sysLogQueryParam) throws Exception {
+        Page<SysLogQueryVo> paging = sysLogService.getSysLogPage(sysLogQueryParam);
         return R.page(paging);
     }
 }

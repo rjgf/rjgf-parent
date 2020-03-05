@@ -164,7 +164,8 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
     }
 
     @Override
-    public IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam, IPage page) throws Exception {
+    public IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam) throws Exception {
+        Page page = new Page(sysUserQueryParam.getPageNo(),sysUserQueryParam.getPageSize());
         return sysUserMapper.getSysUserPageList(page, sysUserQueryParam);
     }
 

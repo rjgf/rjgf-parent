@@ -20,7 +20,6 @@ package com.rjgf.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.system.entity.SysDepartment;
 import com.rjgf.system.vo.req.SysDepartmentQueryParam;
 import com.rjgf.system.vo.resp.SysDepartmentQueryVo;
@@ -56,6 +55,6 @@ public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
      * @param sysDepartmentQueryParam
      * @return
      */
-    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(@Param("page") PageRequest page, @Param("param") SysDepartmentQueryParam sysDepartmentQueryParam);
+    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(@Param("page") Page page, @Param("param") SysDepartmentQueryParam sysDepartmentQueryParam);
 
 }
