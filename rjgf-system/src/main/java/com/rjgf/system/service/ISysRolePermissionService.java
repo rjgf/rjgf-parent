@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.rjgf.system.service;
 
 import com.rjgf.common.service.CommonService;
 import com.rjgf.system.entity.SysRolePermission;
+import com.rjgf.system.vo.req.sysrole.SysRolePermissionParam;
 import org.apache.commons.collections4.SetUtils;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.Set;
  * 角色权限关系 服务类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 public interface ISysRolePermissionService extends CommonService<SysRolePermission> {
@@ -43,6 +44,14 @@ public interface ISysRolePermissionService extends CommonService<SysRolePermissi
      * @throws Exception
      */
     boolean saveSysRolePermission(Long roleId, List<Long> permissionIds) throws Exception;
+
+    /**
+     * 修改角色权限
+     * @param sysRolePermissionParam
+     * @return
+     * @throws Exception
+     */
+    boolean updateSysRolePermission(SysRolePermissionParam sysRolePermissionParam) throws Exception;
 
     /**
      * 根据角色id获取权限id列表
@@ -98,5 +107,4 @@ public interface ISysRolePermissionService extends CommonService<SysRolePermissi
      * @throws Exception
      */
     boolean isExistsByPermissionId(Long permissionId) throws Exception;
-
 }

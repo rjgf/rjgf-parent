@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,23 @@
 
 package com.rjgf.auth.util;
 
+import com.rjgf.auth.jwt.JwtToken;
 import com.rjgf.common.constant.CommonRedisKey;
 import com.rjgf.common.util.jwt.JwtTokenUtil;
 import com.rjgf.auth.vo.LoginSysUserRedisVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 
 /**
  * 获取登陆信息工具类
  *
- * @author geekidea
+ * @author xula
  * @date 2018-11-08
  */
 @Slf4j
@@ -68,6 +72,18 @@ public class LoginUtil {
             return null;
         }
         return loginSysUserRedisVo.getId();
+    }
+
+    /**
+     * 获取当前登陆用户的角色code
+     * @return
+     */
+    public static Set<String> getRoleCodes() {
+        LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo();
+        if (loginSysUserRedisVo == null) {
+            return null;
+        }
+        return loginSysUserRedisVo.getSysRoleCodes();
     }
 
     /**

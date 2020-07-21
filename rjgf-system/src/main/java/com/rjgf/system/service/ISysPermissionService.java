@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import java.util.List;
  * 系统权限 服务类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 public interface ISysPermissionService extends CommonService<SysPermission> {
@@ -142,4 +142,11 @@ public interface ISysPermissionService extends CommonService<SysPermission> {
      * @throws Exception
      */
     List<SysPermissionTreeVo> getMenuTreeByUserId(Long userId) throws Exception;
+
+    /**
+     * 停用或启用菜单
+     * @param id 菜单编号
+     * @param state 状态值
+     */
+    void changeMenuState(Long id,Integer state);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import java.io.Serializable;
  * 系统日志 服务类
  * </p>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-11
  */
 public interface ISysLogService extends CommonService<SysLog> {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.IdUtil;
 import com.rjgf.auth.vo.LoginSysUserRedisVo;
 import com.rjgf.auth.vo.resp.ImgCode;
+import com.rjgf.common.common.annotation.ApiRestController;
 import com.rjgf.common.common.api.R;
 import com.rjgf.common.constant.CommonConstant;
 import com.rjgf.common.constant.CommonRedisKey;
@@ -48,15 +49,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 登陆控制器
- *
- * @author geekidea
- * @date 2019-09-28
- * @since 1.3.0.RELEASE
+ * @author xula
+ * @date 2020-06-23
  **/
-@Api(value = "登陆控制器",description = "用户登录模块")
+@Api(value = "登陆控制器",tags = "用户登录模块")
 @Slf4j
-@RestController
-@RequestMapping("auth")
+@ApiRestController("/auth")
 public class LoginController {
 
     @Autowired
@@ -68,10 +66,8 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation(value = "登陆", notes = "系统用户登陆", response = LoginSysUserTokenVo.class)
-    public R<LoginSysUserTokenVo> login(@Valid @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
+    public R<LoginSysUserTokenVo> login(@Valid @RequestBody LoginParam loginParam) throws Exception {
         LoginSysUserTokenVo loginSysUserTokenVo = authService.login(loginParam);
-        // 设置token响应头
-        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
         return R.ok(loginSysUserTokenVo);
     }
 
@@ -115,5 +111,7 @@ public class LoginController {
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, uuid), code, 5, TimeUnit.MINUTES);
         return R.ok(imgCode);
     }
+
+
 }
 

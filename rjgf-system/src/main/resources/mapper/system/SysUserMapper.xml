@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2019-2029 geekidea(https://github.com/geekidea)
+  ~ Copyright 2019-2029 xula(https://github.com/xula)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@
         id, user_name, real_name, phone,email, gender, head, remark, state, department_id, deleted, version, create_time, update_time
     </sql>
 
+
+
     <select id="getSysUserById" resultType="com.rjgf.system.vo.resp.SysUserInfoQueryVo">
         select
         <include refid="Base_Column_List"/>
@@ -47,7 +49,8 @@
     <select id="getSysUserPageList" resultMap="sysUserMap">
         select
         s.id, s.user_name, s.real_name, s.phone,email, s.gender, s.state, s.create_time , r.name as sys_role_name
-        from sys_user s join sys_user_role b on (s.id = b.user_id) join sys_role r on (b.role_id = r.id)
+        from sys_user s join sys_user_role b on (s.id = b.user_id)
+        join sys_role r on (b.role_id = r.id)
         where s.deleted = 0
         <if test="param.realName != null and param.realName != ''">
             AND s.real_name like  CONCAT('%', #{param.realName}, '%')
@@ -62,9 +65,8 @@
 
 
     <select id="getSysUsersByRoleId" resultType="com.rjgf.system.entity.SysUser">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user s left join sys_user_role r on (s.user_id = r.user_id)
+        select s.*
+        from sys_user s left join sys_user_role r on (s.id = r.user_id)
         where r.role_id = #{roleId}
     </select>
 

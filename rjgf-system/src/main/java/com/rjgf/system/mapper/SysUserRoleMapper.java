@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.rjgf.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rjgf.system.entity.SysRole;
+import com.rjgf.system.entity.SysUser;
 import com.rjgf.system.entity.SysUserRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -29,7 +30,7 @@ import java.util.List;
  * 系统用户-角色 Mapper 接口
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Mapper

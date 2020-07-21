@@ -1,26 +1,28 @@
 package com.rjgf.system.service.impl;
 
 import cn.hutool.crypto.digest.DigestUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rjgf.common.enums.StateEnum;
 import com.rjgf.auth.api.service.ILoginService;
 import com.rjgf.auth.api.vo.LoginSysUserVo;
 import com.rjgf.system.convert.SysUserConvert;
 import com.rjgf.system.entity.SysDepartment;
+import com.rjgf.system.entity.SysPermission;
 import com.rjgf.system.entity.SysRole;
 import com.rjgf.system.entity.SysUser;
-import com.rjgf.system.service.ISysDepartmentService;
-import com.rjgf.system.service.ISysRolePermissionService;
-import com.rjgf.system.service.ISysUserRoleService;
-import com.rjgf.system.service.ISysUserService;
+import com.rjgf.system.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.rjgf.common.constant.SystemConstant.SYSTEM_CODE;
 
 /**
  * 登录接口实现
@@ -41,6 +43,9 @@ public class LoginServiceImpl implements ILoginService {
 
     @Autowired
     private ISysRolePermissionService sysRolePermissionService;
+
+    @Autowired
+    private ISysPermissionService sysPermissionService;
 
     @Autowired
     private ISysUserRoleService iSysUserRoleService;
@@ -78,7 +83,7 @@ public class LoginServiceImpl implements ILoginService {
      */
     private void setUserSystemInfo(SysUser sysUser, LoginSysUserVo loginSysUserVo) throws Exception {
         // 获取部门
-        SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDepartmentId());
+        SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDeptId());
         if (sysDepartment == null) {
             throw new AuthenticationException("部门不存在");
         }
@@ -87,17 +92,23 @@ public class LoginServiceImpl implements ILoginService {
         }
         loginSysUserVo.setDepartmentId(sysDepartment.getId())
                 .setDepartmentName(sysDepartment.getName());
-
         // 获取当前用户角色
         List<SysRole> sysRoles = iSysUserRoleService.getSysUserRoleList(sysUser.getId());
         if (CollectionUtils.isEmpty(sysRoles)) {
             throw new AuthenticationException("角色不存在");
         }
+        Set<String> permissionCodes;
         List<Long> roleIds = sysRoles.stream().map(SysRole::getId).collect(Collectors.toList());
         Set<String> roleCodes = sysRoles.stream().map(SysRole::getCode).collect(Collectors.toSet());
         loginSysUserVo.setSysRoleCodes(roleCodes);
-        // 获取当前用户权限
-        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleIds(roleIds);
+        // 如果包含系统角色，直接获取所有权限列表
+        if (roleCodes.contains(SYSTEM_CODE)) {
+            List<SysPermission> permissionList = sysPermissionService.list(Wrappers.<SysPermission>lambdaQuery().eq(SysPermission::getState,StateEnum.ENABLE.getCode()));
+            permissionCodes = permissionList.stream().map(SysPermission::getCode).collect(Collectors.toSet());
+        } else {
+            // 获取当前用户权限
+            permissionCodes = sysRolePermissionService.getPermissionCodesByRoleIds(roleIds);
+        }
         if (CollectionUtils.isEmpty(permissionCodes)) {
             throw new AuthenticationException("权限列表不能为空");
         }

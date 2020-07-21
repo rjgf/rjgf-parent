@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import javax.validation.constraints.Null;
  * 系统用户
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Data
@@ -71,24 +71,14 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty(value = "性别，0：女，1：男，默认1")
     private Integer gender;
 
-    @ApiModelProperty(value = "头像")
-    private String head;
-
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
     private Integer state;
 
     @ApiModelProperty(value = "部门id")
-//    @NotNull(message = "部门id不能为空")
-    private Long departmentId;
-
-    @ApiModelProperty(value = "版本")
-    @Null(message = "版本不用传")
-    private Integer version;
+    @NotNull(message = "部门id不能为空")
+    private Long deptId;
 
     @ApiModelProperty(value = "电子邮箱")
     @Null(message = "电子邮箱")
     private String email;
-
-    @ApiModelProperty(value = "备注")
-    private String remark;
 }

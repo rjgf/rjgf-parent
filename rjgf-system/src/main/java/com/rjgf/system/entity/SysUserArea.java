@@ -37,7 +37,4 @@ public class SysUserArea extends BaseEntity {
 
     @ApiModelProperty(value = "区域编号")
     private Integer areaId;
-
-    @ApiModelProperty(value = "备注")
-    private String remark;
 }

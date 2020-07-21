@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.Date;
  * 系统日志 查询结果对象
  * </p>
  *
- * @author geekidea
+ * @author xula
  * @date 2019-10-11
  */
 @Data
@@ -39,7 +39,7 @@ public class SysLogQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    private Long logId;
+    private Long id;
 
     @ApiModelProperty(value = "内容")
     private String content;
@@ -60,9 +60,8 @@ public class SysLogQueryVo implements Serializable {
     private String reqIp;
 
     @ApiModelProperty(value = "用户执行状态")
-    private Integer status;
+    private Integer state;
 
     @ApiModelProperty(value = "用户名")
     private String userName;
-
 }

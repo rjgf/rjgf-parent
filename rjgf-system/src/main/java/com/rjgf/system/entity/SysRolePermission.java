@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import javax.validation.constraints.Null;
  * 角色权限关系
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Data
@@ -59,12 +59,4 @@ public class SysRolePermission extends BaseEntity {
 
     @ApiModelProperty(value = "状态，0：禁用，1：启用")
     private Integer state;
-
-    @ApiModelProperty(value = "备注")
-    private String remark;
-
-    @ApiModelProperty(value = "版本")
-    @Null(message = "版本不用传")
-    @Version
-    private Integer version;
 }

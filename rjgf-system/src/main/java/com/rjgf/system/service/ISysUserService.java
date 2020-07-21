@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import java.util.List;
  * 系统用户 服务类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 public interface ISysUserService extends CommonService<SysUser> {
@@ -137,4 +137,14 @@ public interface ISysUserService extends CommonService<SysUser> {
      * @return
      */
     SysUser getSysUserByUsername(String userName);
+
+
+    /**
+     * 停用或启用用户
+     * @param id 角色编号
+     * @param state 状态值
+     */
+    void changeUserState(Long id,Integer state);
+
+
 }

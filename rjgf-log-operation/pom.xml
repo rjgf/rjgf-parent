@@ -12,7 +12,6 @@
     <version>1.0.0</version>
     <name>rjgf-log-operation</name>
     <description>日志记录</description>
-
     <dependencies>
 
         <dependency>
@@ -26,18 +25,4 @@
         </dependency>
 
     </dependencies>
-
-    <!-- 配置部署构建到私服 -->
-    <distributionManagement>
-        <repository>
-            <id>rdc-releases</id>
-            <url>https://repo.rdc.aliyun.com/repository/120621-release-HldziT/</url>
-            <name>rdc-releases</name>
-        </repository>
-        <snapshotRepository>
-            <id>rdc-snapshots</id>
-            <url>https://repo.rdc.aliyun.com/repository/120621-snapshot-8OYdpv/</url>
-            <name>rdc-snapshots</name>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

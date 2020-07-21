@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.Date;
  * 系统权限 查询结果对象
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @date 2019-10-24
  */
 @Data
@@ -47,8 +47,11 @@ public class SysPermissionQueryVo implements Serializable {
     @ApiModelProperty(value = "父id")
     private Long parentId;
 
+    @ApiModelProperty(value = "父类集合")
+    private String parentIds;
+
     @ApiModelProperty(value = "路径")
-    private String url;
+    private String path;
 
     @ApiModelProperty(value = "唯一编码")
     private String code;

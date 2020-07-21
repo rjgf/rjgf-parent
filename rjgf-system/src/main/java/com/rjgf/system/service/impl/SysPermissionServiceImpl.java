@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,19 @@
 
 package com.rjgf.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rjgf.auth.util.LoginUtil;
 import com.rjgf.common.common.exception.BusinessException;
+import com.rjgf.common.common.exception.DaoException;
 import com.rjgf.common.enums.MenuLevelEnum;
 import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
+import com.rjgf.system.constant.SystemConstant;
 import com.rjgf.system.convert.SysPermissionConvert;
 import com.rjgf.system.entity.SysPermission;
 import com.rjgf.system.mapper.SysPermissionMapper;
@@ -33,15 +39,14 @@ import com.rjgf.system.vo.resp.SysPermissionQueryVo;
 import com.rjgf.system.vo.resp.SysPermissionTreeVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.lang.invoke.LambdaMetafactory;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -50,7 +55,7 @@ import java.util.stream.Collectors;
  * 系统权限 服务实现类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-25
  */
 @Slf4j
@@ -66,7 +71,13 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveSysPermission(SysPermission sysPermission) throws Exception {
-        sysPermission.setId(null);
+        int level = 1;
+        String parentIds = sysPermission.getParentIds();
+        if (StringUtils.isNotEmpty(parentIds)) {
+            String[] arr = parentIds.split(",");
+            level = arr.length + 1;
+        }
+        sysPermission.setLevel(level);
         return super.save(sysPermission);
     }
 
@@ -78,19 +89,24 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
         if (updateSysPermission == null) {
             throw new BusinessException("权限不存在");
         }
-
         // 指定需改的字段
+        String parentIds = sysPermission.getParentIds();
+        int level = 1;
+        if (StringUtils.isNotEmpty(parentIds)) {
+            String[] arr = parentIds.split(",");
+            level = arr.length + 1;
+        }
         updateSysPermission.setParentId(sysPermission.getParentId())
-                .setLevel(sysPermission.getLevel())
+                .setParentIds(sysPermission.getParentIds())
+                .setLevel(level)
                 .setName(sysPermission.getName())
-                .setState(sysPermission.getState())
                 .setCode(sysPermission.getCode())
                 .setIcon(sysPermission.getIcon())
-                .setRemark(sysPermission.getRemark())
                 .setSort(sysPermission.getSort())
                 .setType(sysPermission.getType())
-                .setComponent(sysPermission.getComponent())
-                .setUpdateTime(new Date());
+                .setPath(sysPermission.getPath())
+                .setRemark(sysPermission.getRemark());
+
         return super.updateById(updateSysPermission);
     }
 
@@ -106,27 +122,27 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
 
     @Override
     public SysPermissionQueryVo getSysPermissionById(Serializable id) throws Exception {
-        return sysPermissionMapper.getSysPermissionById(id);
+        SysPermission sysPermission = sysPermissionMapper.selectById(id);
+        return SysPermissionConvert.INSTANCE.sysPermissionToQueryVo(sysPermission);
     }
 
     @Override
     public IPage<SysPermissionQueryVo> getSysPermissionPage(SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
-        Page page = new Page(sysPermissionQueryParam.getPageNo(),sysPermissionQueryParam.getPageSize());
-        return sysPermissionMapper.getSysPermissionPageList(page, sysPermissionQueryParam);
+        return sysPermissionMapper.getSysPermissionPageList(sysPermissionQueryParam.getPage(), sysPermissionQueryParam);
     }
 
     @Override
     public boolean isExistsByPermissionIds(List<Long> permissionIds) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.in("id", permissionIds);
+        LambdaQueryWrapper queryWrapper = Wrappers.<SysPermission>lambdaQuery().in(SysPermission::getId,permissionIds);
         return sysPermissionMapper.selectCount(queryWrapper).intValue() == permissionIds.size();
     }
 
     @Override
     public List<SysPermission> getAllMenuList() throws Exception {
-        SysPermission sysPermission = new SysPermission().setState(StateEnum.ENABLE.getCode());
+        SysPermission sysPermission = new SysPermission();
+        LambdaQueryWrapper lambdaQueryWrapper = Wrappers.lambdaQuery(sysPermission).orderByAsc(SysPermission::getLevel,SysPermission::getSort);
         // 获取所有已启用的权限列表
-        return sysPermissionMapper.selectList(new QueryWrapper(sysPermission));
+        return sysPermissionMapper.selectList(lambdaQueryWrapper);
     }
 
     @Override
@@ -159,21 +175,20 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
             if (CollectionUtils.isNotEmpty(twoList)) {
                 for (SysPermission two : twoList) {
                     SysPermissionTreeVo twoVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(two);
+                    List<SysPermission> threeList = map.get(MenuLevelEnum.THREE.getCode());
+                    if (CollectionUtils.isNotEmpty(threeList)) {
+                        for (SysPermission three : threeList) {
+                            SysPermissionTreeVo threeVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(three);
+                            if (threeVo.getParentId().equals(two.getId())) {
+                                twoVo.getChildren().add(threeVo);
+                            }
+                        }
+                    }
                     if (two.getParentId().equals(one.getId())) {
                         oneVo.getChildren().add(twoVo);
                     }
-//                    List<SysPermission> threeList = map.get(MenuLevelEnum.THREE.getCode());
-//                    if (CollectionUtils.isNotEmpty(threeList)) {
-//                        for (SysPermission three : threeList) {
-//                            if (three.getParentId().equals(two.getId())) {
-//                                SysPermissionTreeVo threeVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(three);
-//                                twoVo.getChildren().add(threeVo);
-//                            }
-//                        }
-//                    }
                 }
             }
-
         }
         return treeVos;
     }
@@ -190,9 +205,27 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
 
     @Override
     public List<SysPermissionTreeVo> getMenuTreeByUserId(Long userId) throws Exception {
-        List<SysPermission> list = getMenuListByUserId(userId);
+        Set<String> roleCodes = LoginUtil.getRoleCodes();
+        List<SysPermission> list;
+        // 如果是系统用户获取所有的菜单
+        if (roleCodes.contains(SystemConstant.SYSTEM_CODE)) {
+            list = getAllMenuList();
+        } else {
+            list = getMenuListByUserId(userId);
+        }
         // 转换成树形菜单
         List<SysPermissionTreeVo> treeVos = convertSysPermissionTreeVoList(list);
         return treeVos;
+    }
+
+    @Override
+    public void changeMenuState(Long id,Integer state) {
+        Integer oldState = StateEnum.checkState(state);
+        LambdaUpdateWrapper lambdaUpdateWrapper = Wrappers.<SysPermission>lambdaUpdate().set(SysPermission::getState,state).
+                eq(SysPermission::getId,id).eq(SysPermission::getState,oldState);
+        boolean result = this.update(lambdaUpdateWrapper);
+        if (!result) {
+            throw new DaoException("数据操作异常！");
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,14 @@ package com.rjgf.system.service;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.common.service.CommonService;
 import com.rjgf.system.entity.SysRole;
+import com.rjgf.system.entity.SysRolePermission;
 import com.rjgf.system.vo.req.SysRoleQueryParam;
 import com.rjgf.system.vo.req.sysrole.AddSysRoleParam;
+import com.rjgf.system.vo.req.sysrole.SysRolePermissionParam;
 import com.rjgf.system.vo.req.sysrole.UpdateSysRoleParam;
+import com.rjgf.system.vo.resp.SysRolePermissionVo;
 import com.rjgf.system.vo.resp.SysRoleQueryVo;
 
 import java.io.Serializable;
@@ -34,7 +36,7 @@ import java.util.List;
  * 系统角色 服务类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 public interface ISysRoleService extends CommonService<SysRole> {
@@ -117,4 +119,17 @@ public interface ISysRoleService extends CommonService<SysRole> {
      */
     List<SysRole> getSysRoleList();
 
+    /**
+     * 停用或启用角色
+     * @param id 角色编号
+     * @param state 状态值
+     */
+    void changeRoleState(Long id,Integer state);
+
+    /**
+     * 获取角色的权限信息
+     * @param roleId 角色编号
+     * @return
+     */
+    SysRolePermissionVo getRoleRolePermission(Long roleId) throws Exception;
 }

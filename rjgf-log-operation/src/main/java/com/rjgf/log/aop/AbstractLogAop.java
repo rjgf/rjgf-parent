@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import com.rjgf.auth.util.JwtUtil;
 import com.rjgf.auth.util.LoginUtil;
 import com.rjgf.common.common.api.ApiCode;
 import com.rjgf.common.common.api.R;
+import com.rjgf.common.common.exception.BusinessException;
 import com.rjgf.common.core.properties.SpringBootPlusAopProperties;
 import com.rjgf.common.util.IpUtil;
 import com.rjgf.common.util.jwt.JwtTokenUtil;
@@ -62,7 +63,7 @@ import java.util.*;
  * 3. ThreadLocal线程绑定，方法执行结束时，同时打印请求和响应日志
  * </p>
  *
- * @author geekidea
+ * @author xula
  * @date 2018-11-08
  */
 @Data
@@ -267,11 +268,9 @@ public abstract class AbstractLogAop {
                 sysLog.setReqUrl(map.get("path").toString());
                 sysLog.setTitle(map.get("title").toString());
                 sysLog.setUserName(map.get("userName") == null?null:map.get("userName").toString());
-                sysLog.setCreateTime(new Date());
-                sysLog.setCreateId(LoginUtil.getUserId());
 //                sysLog.setContent(requestInfo);
                 if (code != ApiCode.SUCCESS.getCode()) {
-                    sysLog.setStatus(0);
+                    sysLog.setState(0);
                 }
                 iSysLogService.save(sysLog);
             }

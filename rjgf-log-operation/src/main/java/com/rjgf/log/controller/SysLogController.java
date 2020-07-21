@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,17 @@
 package com.rjgf.log.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rjgf.common.common.annotation.ApiRestController;
 import com.rjgf.common.common.api.R;
-import com.rjgf.common.common.api.req.PageRequest;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.controller.BaseController;
 import com.rjgf.log.service.ISysLogService;
 import com.rjgf.log.vo.req.SysLogQueryParam;
 import com.rjgf.log.vo.resp.SysLogQueryVo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,13 +38,12 @@ import javax.validation.Valid;
  * 系统日志 前端控制器
  * </p>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-11
  */
 @Slf4j
-@RestController
-@RequestMapping("/sysLog")
-@Api(value = "系统日志 API",description = "系统日志")
+@ApiRestController("/sys/log")
+@Api(value = "系统日志 API",tags = "系统日志")
 public class SysLogController extends BaseController {
 
     @Autowired
@@ -54,9 +52,9 @@ public class SysLogController extends BaseController {
     /**
      * 删除系统日志
      */
-    @DeleteMapping("/delete/{id}")
-    @ApiOperation(value = "删除SysLog对象", notes = "删除系统日志")
-    @ApiImplicitParam(paramType = "path", name = "id", value = "日志编号",dataType="Long")
+    @DeleteMapping("/{id}")
+    @RequiresPermissions("sys:log:delete")
+    @ApiOperation(value = "删除SysLog对象", notes = "删除系统日志,权限路径(sys:log:delete)")
     public R deleteSysLog(@Valid @PathVariable Long id) throws Exception {
         boolean flag = sysLogService.removeById(id);
         return R.ok(flag);
@@ -65,10 +63,10 @@ public class SysLogController extends BaseController {
     /**
      * 获取系统日志
      */
-    @GetMapping("/info/{id}")
-    @ApiOperation(value = "获取SysLog对象详情", notes = "查看系统日志", response = SysLogQueryVo.class)
-    @ApiImplicitParam(paramType = "path", name = "id", value = "日志编号",dataType="Long")
-    public R<SysLogQueryVo> getSysLog(@Valid  @PathVariable Long id) throws Exception {
+    @GetMapping("/{id}")
+    @RequiresPermissions("sys:log:info")
+    @ApiOperation(value = "获取SysLog对象详情", notes = "查看系统日志,权限路径(sys:log:info)")
+    public R<SysLogQueryVo> getSysLog(@Valid @PathVariable Long id) throws Exception {
         SysLogQueryVo sysLogQueryVo = sysLogService.getSysLogById(id);
         return R.ok(sysLogQueryVo);
     }
@@ -76,8 +74,9 @@ public class SysLogController extends BaseController {
     /**
      * 系统日志分页列表
      */
-    @PostMapping("")
-    @ApiOperation(value = "获取SysLog分页列表", notes = "系统日志分页列表")
+    @PostMapping("/page")
+    @RequiresPermissions("sys:log:page")
+    @ApiOperation(value = "获取SysLog分页列表", notes = "系统日志分页列表,权限路径(sys:log:page)")
     public R<PageResponse<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogQueryParam sysLogQueryParam) throws Exception {
         Page<SysLogQueryVo> paging = sysLogService.getSysLogPage(sysLogQueryParam);
         return R.page(paging);

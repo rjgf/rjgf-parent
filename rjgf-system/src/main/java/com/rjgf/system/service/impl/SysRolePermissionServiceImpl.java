@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,21 @@
 
 package com.rjgf.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.rjgf.common.common.exception.BusinessException;
+import com.rjgf.common.common.exception.DaoException;
 import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
+import com.rjgf.system.entity.SysRole;
 import com.rjgf.system.entity.SysRolePermission;
 import com.rjgf.system.mapper.SysRolePermissionMapper;
+import com.rjgf.system.service.ISysPermissionService;
 import com.rjgf.system.service.ISysRolePermissionService;
+import com.rjgf.system.service.ISysRoleService;
+import com.rjgf.system.vo.req.sysrole.SysRolePermissionParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +48,7 @@ import java.util.Set;
  * 角色权限关系 服务实现类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-25
  */
 @Slf4j
@@ -47,6 +57,57 @@ public class SysRolePermissionServiceImpl extends CommonServiceImpl<SysRolePermi
 
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;
+    @Autowired
+    private ISysRolePermissionService sysRolePermissionService;
+    @Autowired
+    private ISysPermissionService iSysPermissionService;
+    @Autowired
+    private ISysRoleService iSysRoleService;
+
+    @Override
+    public boolean updateSysRolePermission(SysRolePermissionParam sysRolePermissionParam) throws Exception {
+        Long roleId = sysRolePermissionParam.getRoleId();
+        // 校验角色是否存在
+        SysRole sysRole = iSysRoleService.getById(roleId);
+        if (sysRole == null) {
+            throw new BusinessException("该角色不存在");
+        }
+        List<Long> permissionIds = sysRolePermissionParam.getPermissionIds();
+        // 校验权限列表是否存在
+        if (!iSysPermissionService.isExistsByPermissionIds(permissionIds)) {
+            throw new BusinessException("权限列表id匹配失败");
+        }
+        // 获取之前的权限id集合
+        List<Long> beforeList = sysRolePermissionService.getPermissionIdsByRoleId(roleId);
+        // 差集计算
+        // before：1,2,3,4,5,6
+        // after： 1,2,3,4,7,8
+        // 删除5,6 新增7,8
+        // 此处真实删除，去掉deleted字段的@TableLogic注解
+        Set<Long> beforeSet = new HashSet<>(beforeList);
+        Set<Long> afterSet = new HashSet<>(permissionIds);
+        SetUtils.SetView deleteSet = SetUtils.difference(beforeSet, afterSet);
+        SetUtils.SetView addSet = SetUtils.difference(afterSet, beforeSet);
+        log.debug("deleteSet = " + deleteSet);
+        log.debug("addSet = " + addSet);
+
+        // 删除权限关联
+        UpdateWrapper updateWrapper = new UpdateWrapper();
+        updateWrapper.eq("role_id",roleId);
+        updateWrapper.in("permission_id",deleteSet);
+        if (!deleteSet.isEmpty()) {
+            boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
+            if (!deleteResult) {
+                throw new DaoException("删除角色权限关系失败");
+            }
+        }
+        // 新增权限关联
+        boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
+        if (!addResult) {
+            throw new DaoException("新增角色权限关系失败");
+        }
+        return true;
+    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -63,12 +124,14 @@ public class SysRolePermissionServiceImpl extends CommonServiceImpl<SysRolePermi
         return saveBatch(list, 20);
     }
 
+
+
     @Override
     public List<Long> getPermissionIdsByRoleId(Long roleId) throws Exception {
         SysRolePermission sysRolePermission = new SysRolePermission()
                 .setRoleId(roleId)
                 .setState(StateEnum.ENABLE.getCode());
-        QueryWrapper queryWrapper = new QueryWrapper(sysRolePermission, "permission_id");
+        LambdaQueryWrapper queryWrapper = Wrappers.lambdaQuery(sysRolePermission).select(SysRolePermission::getPermissionId);
         return sysRolePermissionMapper.selectObjs(queryWrapper);
     }
 
@@ -112,4 +175,5 @@ public class SysRolePermissionServiceImpl extends CommonServiceImpl<SysRolePermi
                 .setPermissionId(permissionId);
         return count(new QueryWrapper(sysRolePermission)) > 0;
     }
+
 }

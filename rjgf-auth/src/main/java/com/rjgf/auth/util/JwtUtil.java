@@ -20,7 +20,7 @@ import java.util.Date;
  * JWT工具类
  * https://github.com/auth0/java-jwt
  *
- * @author geekidea
+ * @author xula
  * @date 2019-09-30
  * @since 1.3.0.RELEASE
  **/
@@ -112,8 +112,7 @@ public class JwtUtil {
      * @return
      */
     public static DecodedJWT getJwtInfo(String token) {
-        DecodedJWT decodedJWT = JWT.decode(token);
-        return decodedJWT;
+        return JWT.decode(token);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import javax.validation.constraints.Null;
  * 系统角色
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Data
@@ -53,7 +53,8 @@ public class SysRole extends BaseEntity {
     @NotBlank(message = "角色名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "角色唯一编码")
+    @ApiModelProperty(value = "角色code")
+    @NotBlank(message = "角色code不能为空")
     private String code;
 
     @ApiModelProperty(value = "角色类型")
@@ -61,13 +62,4 @@ public class SysRole extends BaseEntity {
 
     @ApiModelProperty(value = "角色状态，0：禁用，1：启用")
     private Integer state;
-
-    @ApiModelProperty(value = "备注")
-    private String remark;
-
-    @ApiModelProperty(value = "版本")
-    @Null(message = "版本不用传")
-    @Version
-    private Integer version;
-
 }

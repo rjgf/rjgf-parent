@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,12 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import java.util.Set;
 
+import static com.rjgf.common.constant.SystemConstant.SYSTEM_CODE;
+
 /**
  * Shiro 授权认证
  *
- * @author geekidea
+ * @author xula
  * @date 2019-09-27
  * @since 1.3.0.RELEASE
  **/
@@ -65,6 +67,7 @@ public class JwtRealm extends AuthorizingRealm {
         JwtToken jwtToken = (JwtToken) principalCollection.getPrimaryPrincipal();
         // 获取username
         String username = jwtToken.getUsername();
+        // 获取当前用户的角色
         // 获取登陆用户角色权限信息
         LoginSysUserRedisVo loginSysUserRedisVo = loginRedisService.getLoginSysUserRedisVo(username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();

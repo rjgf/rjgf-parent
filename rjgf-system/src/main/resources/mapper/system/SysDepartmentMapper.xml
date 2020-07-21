@@ -5,19 +5,13 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, parent_id, state, sort, remark, version, create_time, update_time
+        id, name, parent_id, state, sort, remark, create_time, update_time
     </sql>
-
-    <select id="getSysDepartmentById" resultType="com.rjgf.system.vo.resp.SysDepartmentQueryVo">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_department where id = #{id}
-    </select>
 
     <select id="getSysDepartmentPageList" resultType="com.rjgf.system.vo.resp.SysDepartmentQueryVo">
         select
         <include refid="Base_Column_List"/>
-        from sys_department
+        from sys_dept
     </select>
 
 </mapper>

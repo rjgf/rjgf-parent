@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 /**
  * AOP配置属性
  *
- * @author geekidea
+ * @author xula
  * @date 2019-09-29
  * @since 1.3.0.RELEASE
  **/

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,9 @@ package com.rjgf.system.service.impl;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.auth0.jwt.JWT;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.auth.util.JwtUtil;
 import com.rjgf.auth.util.LoginUtil;
@@ -29,6 +31,7 @@ import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.common.util.jwt.SaltUtil;
 import com.rjgf.system.convert.SysUserConvert;
+import com.rjgf.system.entity.SysPermission;
 import com.rjgf.system.entity.SysUser;
 import com.rjgf.system.mapper.SysUserMapper;
 import com.rjgf.system.service.*;
@@ -54,7 +57,7 @@ import java.util.List;
  * 系统用户 服务实现类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Slf4j
@@ -86,7 +89,7 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
             throw new BusinessException("用户名已存在");
         }
         // 校验部门和角色
-        checkDepartmentAndRole(addSysUserParam.getDepartmentId(), addSysUserParam.getRoleIds());
+        checkDepartmentAndRole(addSysUserParam.getDeptId(), addSysUserParam.getRoleIds());
         // 生成盐值
         String salt = SaltUtil.generateSalt();
         SysUser sysUser = SysUserConvert.INSTANCE.addSysUserParamToSysUser(addSysUserParam);
@@ -94,7 +97,6 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
         // 密码加密
         String newPassword = DigestUtil.sha256Hex(sysUser.getPassword() + salt);
         sysUser.setPassword(newPassword);
-        sysUser.setCreateId(LoginUtil.getUserId());
         // 保存系统用户
         boolean result = super.save(sysUser);
         if (!result) {
@@ -125,11 +127,9 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
         updateSysUser.setRealName(updateSysUserParam.getRealName())
                 .setPhone(updateSysUserParam.getPhone())
                 .setGender(updateSysUserParam.getGender())
-                .setRemark(updateSysUserParam.getRemark())
                 .setState(updateSysUserParam.getState())
-                .setDepartmentId(updateSysUserParam.getDepartmentId())
-                .setUpdateTime(new Date())
-                .setUpdateId(LoginUtil.getUserId());
+                .setDeptId(updateSysUserParam.getDepartmentId())
+                .setRemark(updateSysUserParam.getRemark());
 
         Long userId = updateSysUserParam.getId();
         // 保存系统用户
@@ -165,8 +165,7 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
 
     @Override
     public IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam) throws Exception {
-        Page page = new Page(sysUserQueryParam.getPageNo(),sysUserQueryParam.getPageSize());
-        return sysUserMapper.getSysUserPageList(page, sysUserQueryParam);
+        return sysUserMapper.getSysUserPageList(sysUserQueryParam.getPage(), sysUserQueryParam);
     }
 
     @Override
@@ -247,5 +246,16 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
     public SysUser getSysUserByUsername(String userName) {
         SysUser sysUser = new SysUser().setUserName(userName);
         return getOne(new QueryWrapper(sysUser));
+    }
+
+    @Override
+    public void changeUserState(Long id, Integer state) {
+        Integer oldState = StateEnum.checkState(state);
+        LambdaUpdateWrapper lambdaUpdateWrapper = Wrappers.<SysUser>lambdaUpdate().set(SysUser::getState,state)
+                .eq(SysUser::getId,id).eq(SysUser::getState,oldState);
+        boolean result = this.update(lambdaUpdateWrapper);
+        if (!result) {
+            throw new DaoException("数据操作异常！");
+        }
     }
 }

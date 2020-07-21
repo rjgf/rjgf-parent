@@ -1,6 +1,9 @@
 package com.rjgf.common.common.api.req;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,5 +41,17 @@ public class PageParam implements Serializable {
     /**
      * 排序字段信息
      */
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "排序", required = true)
     private List<OrderItem> orders = new ArrayList<>();
+
+    /**
+     * 获取分页对象
+     * @return
+     */
+    @JsonIgnore // 忽略在swagger页面显示
+    public IPage getPage() {
+        return new Page(this.getPageNo(),this.getPageSize());
+    }
 }

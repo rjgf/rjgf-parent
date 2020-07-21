@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import com.rjgf.common.config.converter.StringToDoubleUtil;
 import java.io.IOException;
 
 /**
- * @author geekidea
+ * @author xula
  * @date 2018-11-08
  */
 public class JacksonDoubleDeserializer extends JsonDeserializer<Double> {

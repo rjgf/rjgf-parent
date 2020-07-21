@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * 添加角色
  *
- * @author geekidea
+ * @author xula
  * @date 2019-10-25
  **/
 @Data
@@ -39,7 +39,6 @@ import java.util.List;
 public class UpdateSysRoleParam {
 
     @ApiModelProperty(value = "主键")
-    @NotNull(message = "主键不能为空")
     private Long id;
 
     @ApiModelProperty(value = "角色名称")
@@ -54,10 +53,5 @@ public class UpdateSysRoleParam {
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-    @ApiModelProperty(value = "权限id列表")
-    @NotEmpty(message = "权限集合不能为空")
-    @Size(max = 1000, message = "权限集合超过上限")
-    private List<Long> permissionIds;
 
 }

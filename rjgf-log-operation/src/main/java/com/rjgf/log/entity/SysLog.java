@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import lombok.experimental.Accessors;
  * 系统日志
  * </p>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-11
  */
 @Data
@@ -42,8 +42,8 @@ public class SysLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "log_id", type = IdType.ASSIGN_ID)
-    private Long logId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
     @ApiModelProperty(value = "标题")
     private String title;
@@ -57,8 +57,8 @@ public class SysLog extends BaseEntity {
     @ApiModelProperty(value = "用户访问的ip地址")
     private String reqIp;
 
-    @ApiModelProperty(value = "用户执行状态")
-    private Integer status;
+    @ApiModelProperty(value = "用户执行状态 0:成功 1:失败")
+    private Integer state;
 
     @ApiModelProperty(value = "用户名")
     private String userName;

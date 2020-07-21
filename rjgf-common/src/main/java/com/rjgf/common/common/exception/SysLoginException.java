@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.rjgf.common.common.exception;
 
 /**
  * 系统登录异常
- * @author geekidea
+ * @author xula
  * @date 2019-08-04
  */
 public class SysLoginException extends SpringBootPlusException{

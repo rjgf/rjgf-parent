@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ package com.rjgf.system.service;
 
 import com.rjgf.common.service.CommonService;
 import com.rjgf.system.entity.SysRole;
+import com.rjgf.system.entity.SysUser;
 import com.rjgf.system.entity.SysUserRole;
+import com.rjgf.system.vo.resp.SysUsersRoleVo;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ import java.util.List;
  * 系统角色 服务类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 public interface ISysUserRoleService extends CommonService<SysUserRole> {
@@ -49,4 +51,21 @@ public interface ISysUserRoleService extends CommonService<SysUserRole> {
      * @return
      */
     boolean addUserRole(Long userId, List<Long> roleIds);
+
+
+    /**
+     * 获取所属该角色用户列表
+     * @param roleId
+     * @return
+     */
+    List<SysUsersRoleVo> getSysUserListByRole(Long roleId);
+
+
+    /**
+     * 添加或更新用户角色信息
+     * @param roleId 角色编号
+     * @param userIds 用户列表
+     * @return
+     */
+    boolean addRoleUsers(Long roleId, List<Long> userIds);
 }

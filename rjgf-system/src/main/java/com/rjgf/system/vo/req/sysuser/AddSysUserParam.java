@@ -6,10 +6,7 @@ import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -37,22 +34,18 @@ public class AddSysUserParam implements Serializable {
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    @ApiModelProperty(value = "手机号码",required = true)
-    @NotBlank(message = "手机号码不能为空")
+    @ApiModelProperty(value = "手机号码")
     private String phone;
 
     @ApiModelProperty(value = "性别，0：女，1：男，默认1",required = true)
     private Integer gender;
 
-    @ApiModelProperty(value = "头像")
-    private String head;
-
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
     private Integer state;
 
-    @ApiModelProperty(value = "部门id")
-//    @NotNull(message = "部门id不能为空")
-    private Long departmentId;
+    @ApiModelProperty(value = "部门id",required = true)
+    @NotNull(message = "部门id不能为空")
+    private Long deptId;
 
     @ApiModelProperty(value = "角色id列表",required = true)
     @NotEmpty(message = "角色集合不能为空")

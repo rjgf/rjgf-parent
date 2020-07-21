@@ -20,6 +20,7 @@
         <module>rjgf-auth</module>
         <module>rjgf-system</module>
         <module>rjgf-common</module>
+        <module>rjgf-log-operation</module>
     </modules>
 
     <properties>
@@ -31,7 +32,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <hutool.version>5.1.1</hutool.version>
         <commons-codec.version>1.13</commons-codec.version>
-        <swagger2.version>2.6.1</swagger2.version>
+        <swagger2.version>2.8.0</swagger2.version>
         <mysql.version>5.1.47</mysql.version>
         <mybatis-plus-boot-starter.version>3.3.0</mybatis-plus-boot-starter.version>
         <velocity.version>1.7</velocity.version>
@@ -122,13 +123,6 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger2.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>${swagger.bootstrap.ui.version}</version>
-            </dependency>
-
             <!-- swagger end -->
 
             <!-- mybatis-plus begin -->
@@ -345,17 +339,24 @@
     </repositories>
 
     <!-- 配置部署构建到私服 -->
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>rdc-releases</id>-->
+<!--            <url>https://repo.rdc.aliyun.com/repository/120621-release-HldziT/</url>-->
+<!--            <name>rdc-releases</name>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>rdc-snapshots</id>-->
+<!--            <url>https://repo.rdc.aliyun.com/repository/120621-snapshot-8OYdpv/</url>-->
+<!--            <name>rdc-snapshots</name>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
+    <!-- 配置部署构建到私服 -->
     <distributionManagement>
         <repository>
-            <id>rdc-releases</id>
-            <url>https://repo.rdc.aliyun.com/repository/120621-release-HldziT/</url>
-            <name>rdc-releases</name>
+            <id>3rdParty</id>
+            <url>http://192.168.110.240:9091/repository/3rdParty/</url>
+            <name>3rdParty</name>
         </repository>
-        <snapshotRepository>
-            <id>rdc-snapshots</id>
-            <url>https://repo.rdc.aliyun.com/repository/120621-snapshot-8OYdpv/</url>
-            <name>rdc-snapshots</name>
-        </snapshotRepository>
     </distributionManagement>
-
 </project>

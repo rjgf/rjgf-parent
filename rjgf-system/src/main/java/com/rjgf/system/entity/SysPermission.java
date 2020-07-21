@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,13 +28,14 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.List;
 
 /**
  * <pre>
  * 系统权限
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Data
@@ -49,46 +50,38 @@ public class SysPermission extends BaseEntity {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "权限名称")
+    @ApiModelProperty(value = "权限名称",required = true)
     private String name;
 
-    @ApiModelProperty(value = "父id")
+    @ApiModelProperty(value = "父id",required = true)
     private Long parentId;
 
-    @ApiModelProperty(value = "组件")
-    private String component;
+    @ApiModelProperty(value = "上级父类的集合",required = true)
+    private String parentIds;
 
-    @ApiModelProperty(value = "路径")
+    @ApiModelProperty(value = "路径",required = true)
     private String path;
 
     @ApiModelProperty(value = "唯一编码")
     @NotBlank(message = "唯一编码不能为空")
     private String code;
 
-    @ApiModelProperty(value = "图标")
+    @ApiModelProperty(value = "图标",required = true)
     private String icon;
 
     @ApiModelProperty(value = "是否隐藏")
     private Boolean hidden;
 
-    @ApiModelProperty(value = "类型，1：菜单，2：按钮")
+    @ApiModelProperty(value = "类型，1：菜单，2：按钮",required = true)
     @NotNull(message = "类型，1：菜单，2：按钮不能为空")
     private Integer type;
 
     @ApiModelProperty(value = "层级，1：第一级，2：第二级，N：第N级")
-    @NotNull(message = "层级，1：第一级，2：第二级，N：第N级不能为空")
     private Integer level;
 
     @ApiModelProperty(value = "状态，0：禁用，1：启用")
     private Integer state;
 
-    @ApiModelProperty(value = "排序")
+    @ApiModelProperty(value = "排序",required = true)
     private Integer sort;
-
-    @ApiModelProperty(value = "备注")
-    private String remark;
-
-    @ApiModelProperty(value = "版本")
-    @Null(message = "版本不用传")
-    private Integer version;
 }

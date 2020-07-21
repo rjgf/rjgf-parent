@@ -21,6 +21,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
@@ -68,7 +74,7 @@
                 <profileActive>local</profileActive>
             </properties>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
         </profile>
         <profile>
@@ -77,7 +83,7 @@
                 <profileActive>dev</profileActive>
             </properties>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
         <profile>
@@ -121,23 +127,25 @@
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-jar-plugin</artifactId>-->
-                <!--<version>2.4</version>-->
-                <!--<configuration>-->
-                    <!--<archive>-->
-                        <!--<manifestEntries>-->
-                            <!--<Class-Path>.</Class-Path>-->
-                        <!--</manifestEntries>-->
-                    <!--</archive>-->
-                    <!--<excludes>-->
-                        <!--<exclude>config/**</exclude>-->
-                        <!--<exclude>com/rjgf/system/RjgfSystemApplication.class</exclude>-->
-                    <!--</excludes>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--&lt;!&ndash; 由于没有直接继承spring-boot-starter-parent，此处修添加主类和设置repackage &ndash;&gt;-->
+            <!-- 打包成jar发布私服的时候开启注释 start 主要用于去除配置文件和主类-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>2.4</version>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifestEntries>-->
+<!--                            <Class-Path>.</Class-Path>-->
+<!--                        </manifestEntries>-->
+<!--                    </archive>-->
+<!--                    <excludes>-->
+<!--                        <exclude>config/**</exclude>-->
+<!--                        <exclude>com/rjgf/system/RjgfSystemApplication.class</exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <!-- 打包成jar发布私服的时候开启注释 end -->
+            <!-- 由于没有直接继承spring-boot-starter-parent，此处修添加主类和设置repackage -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

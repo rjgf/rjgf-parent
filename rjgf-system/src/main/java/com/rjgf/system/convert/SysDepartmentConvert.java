@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.rjgf.system.convert;
 
 
 import com.rjgf.system.entity.SysDepartment;
+import com.rjgf.system.vo.resp.SysDepartmentQueryVo;
 import com.rjgf.system.vo.resp.SysDepartmentTreeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * 部门对象转换器
  *
- * @author geekidea
+ * @author xula
  * @date 2019-11-01
  **/
 @Mapper
@@ -51,4 +52,11 @@ public interface SysDepartmentConvert {
      */
     List<SysDepartmentTreeVo> listToTreeVoList(List<SysDepartment> list);
 
+
+    /**
+     * SysDepartment 转成 SysDepartmentQueryVo
+     * @param sysDepartment
+     * @return
+     */
+    SysDepartmentQueryVo sysDepartmentToQueryVo(SysDepartment sysDepartment);
 }

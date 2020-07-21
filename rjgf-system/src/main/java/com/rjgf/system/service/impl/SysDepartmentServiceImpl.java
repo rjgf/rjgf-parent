@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package com.rjgf.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rjgf.common.common.api.req.PageParam;
 import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.system.convert.SysDepartmentConvert;
@@ -31,6 +31,7 @@ import com.rjgf.system.vo.resp.SysDepartmentQueryVo;
 import com.rjgf.system.vo.resp.SysDepartmentTreeVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ import java.util.List;
  * 部门 服务实现类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Slf4j
@@ -55,16 +56,44 @@ public class SysDepartmentServiceImpl extends CommonServiceImpl<SysDepartmentMap
     @Autowired
     private SysDepartmentMapper sysDepartmentMapper;
 
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean save(SysDepartment sysDepartment) {
-        sysDepartment.setId(null);
+        if (sysDepartment.getParentId() == null) {
+            return super.save(sysDepartment);
+        }
+        dealSysDepartmentAsAddAndUpdate(sysDepartment);
         return super.save(sysDepartment);
+    }
+
+
+    /**
+     * 目前主要再添加或修改的时候加一层数据处理
+     * @param sysDepartment
+     */
+    private void  dealSysDepartmentAsAddAndUpdate(SysDepartment sysDepartment) {
+        // 获取父类的谱图
+        Long parentId = sysDepartment.getParentId();
+        SysDepartment parent = sysDepartmentMapper.selectById(parentId);
+        String parentIds = parent.getParentIds();
+        if (StringUtils.isEmpty(parentIds)) {
+            parentIds = parentId.toString();
+        } else {
+            parentIds = StringUtils.join(new Object[]{parent.getParentIds(), parentId}, ",");
+        }
+        sysDepartment.setParentIds(parentIds);
+        Integer level = parent.getLevel() + 1;
+        sysDepartment.setLevel(level);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update(SysDepartment sysDepartment) throws Exception {
+        if (sysDepartment.getParentId() == null) {
+            return super.updateById(sysDepartment);
+        }
+        dealSysDepartmentAsAddAndUpdate(sysDepartment);
         return super.updateById(sysDepartment);
     }
 
@@ -76,7 +105,8 @@ public class SysDepartmentServiceImpl extends CommonServiceImpl<SysDepartmentMap
 
     @Override
     public SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception {
-        return sysDepartmentMapper.getSysDepartmentById(id);
+        SysDepartment sysDepartment = sysDepartmentMapper.selectById(id);
+        return SysDepartmentConvert.INSTANCE.sysDepartmentToQueryVo(sysDepartment);
     }
 
     @Override
@@ -103,14 +133,15 @@ public class SysDepartmentServiceImpl extends CommonServiceImpl<SysDepartmentMap
 
     @Override
     public List<SysDepartmentTreeVo> getAllDepartmentTree() {
-        List<SysDepartment> sysDepartmentList = super.baseMapper.selectList(null);
+        SysDepartment sysDepartment = new SysDepartment().setState(StateEnum.ENABLE.getCode());
+        List<SysDepartment> sysDepartmentList = super.baseMapper.selectList(Wrappers.lambdaQuery(sysDepartment));
         if (CollectionUtils.isEmpty(sysDepartmentList)) {
             throw new IllegalArgumentException("SysDepartment列表不能为空");
         }
         List<SysDepartmentTreeVo> list = SysDepartmentConvert.INSTANCE.listToTreeVoList(sysDepartmentList);
         List<SysDepartmentTreeVo> treeVos = new ArrayList<>();
         for (SysDepartmentTreeVo treeVo : list) {
-            if (treeVo.getParentId() == null) {
+            if (treeVo.getParentId() == null || treeVo.getParentId() == -1) {
                 treeVos.add(findChildren(treeVo, list));
             }
         }

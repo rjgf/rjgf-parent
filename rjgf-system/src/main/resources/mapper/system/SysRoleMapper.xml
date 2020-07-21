@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2019-2029 geekidea(https://github.com/geekidea)
+  ~ Copyright 2019-2029 xula(https://github.com/xula)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -20,19 +20,21 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, code, type, state, remark, version, create_time, update_time
+        id, name, code, type, state, remark, create_time, create_by,update_time
     </sql>
 
     <select id="getSysRoleById" resultType="com.rjgf.system.vo.resp.SysRoleQueryVo">
         select
         <include refid="Base_Column_List"/>
-        from sys_role where id = #{id}
+        from sys_role
+        where deleted=0 and id = #{id}
     </select>
 
     <select id="getSysRolePageList" resultType="com.rjgf.system.vo.resp.SysRoleQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_role
+        where deleted=0
     </select>
 
 </mapper>

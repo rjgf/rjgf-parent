@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,18 @@
 
 package com.rjgf.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rjgf.common.common.exception.BusinessException;
 import com.rjgf.common.common.exception.DaoException;
 import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.system.convert.SysRoleConvert;
+import com.rjgf.system.entity.SysPermission;
 import com.rjgf.system.entity.SysRole;
 import com.rjgf.system.mapper.SysRoleMapper;
 import com.rjgf.system.service.ISysPermissionService;
@@ -33,19 +36,24 @@ import com.rjgf.system.service.ISysRoleService;
 import com.rjgf.system.service.ISysUserService;
 import com.rjgf.system.vo.req.SysRoleQueryParam;
 import com.rjgf.system.vo.req.sysrole.AddSysRoleParam;
+import com.rjgf.system.vo.req.sysrole.SysRolePermissionParam;
 import com.rjgf.system.vo.req.sysrole.UpdateSysRoleParam;
+import com.rjgf.system.vo.resp.SysPermissionTreeVo;
+import com.rjgf.system.vo.resp.SysRolePermissionVo;
 import com.rjgf.system.vo.resp.SysRoleQueryVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.rjgf.common.enums.StateEnum.checkState;
 
 
 /**
@@ -53,7 +61,7 @@ import java.util.Set;
  * 系统角色 服务实现类
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Slf4j
@@ -75,85 +83,30 @@ public class SysRoleServiceImpl extends CommonServiceImpl<SysRoleMapper, SysRole
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveSysRole(AddSysRoleParam addSysRoleParam) throws Exception {
-        String code = addSysRoleParam.getCode();
-        List<Long> permissionIds = addSysRoleParam.getPermissionIds();
-        // 校验角色标识code唯一性
-        if (isExistsByCode(code)) {
-            throw new BusinessException("角色编码已存在");
+        // 判断角色code是否可用
+        String roleCode = addSysRoleParam.getCode();
+        boolean isEnable = isExistsByCode(roleCode);
+        if (isEnable) {
+            throw new BusinessException("角色code已存在");
         }
-        // 校验权限列表是否存在
-        if (!sysPermissionService.isExistsByPermissionIds(permissionIds)) {
-            throw new BusinessException("权限id不存在");
-        }
-
-        // 保存角色
         SysRole sysRole = SysRoleConvert.INSTANCE.addSysRoleParamToSysRole(addSysRoleParam);
-        boolean saveRoleResult = super.save(sysRole);
-        if (!saveRoleResult) {
-            throw new DaoException("保存角色失败");
-        }
+        return super.save(sysRole); }
 
-        // 保存角色权限
-        Long roleId = sysRole.getId();
-        boolean saveRolePermissionResult = sysRolePermissionService.saveSysRolePermission(roleId, permissionIds);
-        if (!saveRolePermissionResult) {
-            throw new DaoException("保存角色权限失败");
-        }
-        return true;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateSysRole(UpdateSysRoleParam updateSysRoleParam) throws Exception {
         Long roleId = updateSysRoleParam.getId();
-        List<Long> permissionIds = updateSysRoleParam.getPermissionIds();
-        // 校验角色是否存在
         SysRole sysRole = getById(roleId);
         if (sysRole == null) {
             throw new BusinessException("该角色不存在");
         }
-        // 校验权限列表是否存在
-        if (!sysPermissionService.isExistsByPermissionIds(permissionIds)) {
-            throw new BusinessException("权限列表id匹配失败");
-        }
-
         // 修改角色
         sysRole.setName(updateSysRoleParam.getName())
                 .setType(updateSysRoleParam.getType())
-                .setRemark(updateSysRoleParam.getRemark())
                 .setState(updateSysRoleParam.getState())
-                .setUpdateTime(new Date());
+                .setRemark(updateSysRoleParam.getRemark());
         boolean updateResult = updateById(sysRole);
         if (!updateResult) {
             throw new DaoException("修改系统角色失败");
-        }
-
-        // 获取之前的权限id集合
-        List<Long> beforeList = sysRolePermissionService.getPermissionIdsByRoleId(roleId);
-        // 差集计算
-        // before：1,2,3,4,5,6
-        // after： 1,2,3,4,7,8
-        // 删除5,6 新增7,8
-        // 此处真实删除，去掉deleted字段的@TableLogic注解
-        Set<Long> beforeSet = new HashSet<>(beforeList);
-        Set<Long> afterSet = new HashSet<>(permissionIds);
-        SetUtils.SetView deleteSet = SetUtils.difference(beforeSet, afterSet);
-        SetUtils.SetView addSet = SetUtils.difference(afterSet, beforeSet);
-        log.debug("deleteSet = " + deleteSet);
-        log.debug("addSet = " + addSet);
-
-        // 删除权限关联
-        UpdateWrapper updateWrapper = new UpdateWrapper();
-        updateWrapper.eq("role_id",roleId);
-        updateWrapper.in("permission_id",deleteSet);
-        boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
-        if (!deleteResult) {
-            throw new DaoException("删除角色权限关系失败");
-        }
-        // 新增权限关联
-        boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
-        if (!addResult) {
-            throw new DaoException("新增角色权限关系失败");
         }
         return true;
     }
@@ -171,6 +124,12 @@ public class SysRoleServiceImpl extends CommonServiceImpl<SysRoleMapper, SysRole
         if (!deleteRoleResult) {
             throw new DaoException("删除角色失败");
         }
+        // 判断角色是否有权限
+        List<Long> sysRolePermissionIds= sysRolePermissionService.getPermissionIdsByRoleId(id);
+        // 如果角色没有权限，不需要进行角色权限删除
+        if (CollectionUtils.isEmpty(sysRolePermissionIds)) {
+            return true;
+        }
         // 角色权限关系真实删除
         boolean deletePermissionResult = sysRolePermissionService.deleteSysRolePermissionByRoleId(id);
         if (!deletePermissionResult) {
@@ -186,8 +145,7 @@ public class SysRoleServiceImpl extends CommonServiceImpl<SysRoleMapper, SysRole
 
     @Override
     public IPage<SysRoleQueryVo> getSysRolePage(SysRoleQueryParam sysRoleQueryParam) throws Exception {
-        Page page = new Page(sysRoleQueryParam.getPageNo(),sysRoleQueryParam.getPageSize());
-        return sysRoleMapper.getSysRolePageList(page, sysRoleQueryParam);
+        return sysRoleMapper.getSysRolePageList(sysRoleQueryParam.getPage(), sysRoleQueryParam);
     }
 
     @Override
@@ -201,9 +159,8 @@ public class SysRoleServiceImpl extends CommonServiceImpl<SysRoleMapper, SysRole
 
     @Override
     public boolean isEnableSysRole(List<Long> ids) throws Exception {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("state",StateEnum.ENABLE.getCode());
-        queryWrapper.in("id",ids.toArray());
+        LambdaQueryWrapper<SysRole> queryWrapper = Wrappers.<SysRole>lambdaQuery()
+                .eq(SysRole::getState,StateEnum.ENABLE.getCode()).in(SysRole::getId,ids.toArray());
         int count = sysRoleMapper.selectCount(queryWrapper);
         return count > 0;
     }
@@ -218,5 +175,29 @@ public class SysRoleServiceImpl extends CommonServiceImpl<SysRoleMapper, SysRole
     public List<SysRole> getSysRoleList() {
         SysRole sysRole = new SysRole().setState(StateEnum.ENABLE.getCode());
         return  sysRoleMapper.selectList(new QueryWrapper<>(sysRole));
+    }
+
+
+    @Override
+    public void changeRoleState(Long id, Integer state) {
+        int oldState = checkState(state);
+        LambdaUpdateWrapper lambdaUpdateWrapper = Wrappers.<SysRole>lambdaUpdate().set(SysRole::getState,state)
+                .eq(SysRole::getId,id).eq(SysRole::getState,oldState);
+        boolean result = this.update(lambdaUpdateWrapper);
+        if (!result) {
+            throw new DaoException("数据操作异常！");
+        }
+    }
+
+
+    @Override
+    public SysRolePermissionVo getRoleRolePermission(Long roleId) throws Exception {
+        SysRolePermissionVo sysRolePermissionVo = new SysRolePermissionVo();
+        List<Long> rolePermissionIds = sysRolePermissionService.getPermissionIdsByRoleId(roleId);
+        List<SysPermissionTreeVo> sysPermissionTreeVoList = sysPermissionService.getAllMenuTree();
+        sysRolePermissionVo.setRoleId(roleId);
+        sysRolePermissionVo.setRolePermissionIds(rolePermissionIds);
+        sysRolePermissionVo.setSysPermissionTreeVoList(sysPermissionTreeVoList);
+        return sysRolePermissionVo;
     }
 }

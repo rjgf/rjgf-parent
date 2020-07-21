@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * 添加角色
  *
- * @author geekidea
+ * @author xula
  * @date 2019-10-25
  **/
 @Data
@@ -37,11 +37,11 @@ import java.util.List;
 @ApiModel(value = "添加角色", description = "添加系统角色参数对象")
 public class AddSysRoleParam {
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "角色名称",required = true)
     @NotBlank(message = "角色名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "角色唯一编码")
+    @ApiModelProperty(value = "角色唯一编码",required = true)
     private String code;
 
     @ApiModelProperty(value = "角色类型")
@@ -52,10 +52,4 @@ public class AddSysRoleParam {
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-    @ApiModelProperty(value = "权限id列表")
-    @NotEmpty(message = "权限集合不能为空")
-    @Size(max = 1000, message = "权限集合超过上限")
-    private List<Long> permissionIds;
-
 }

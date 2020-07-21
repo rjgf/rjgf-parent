@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -28,11 +29,12 @@ import lombok.experimental.Accessors;
  * 系统用户 查询参数对象
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @date 2019-10-24
  */
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
 public class SysUserQueryParam extends PageParam {
     private static final long serialVersionUID = 1L;
@@ -42,6 +44,9 @@ public class SysUserQueryParam extends PageParam {
 
     @ApiModelProperty(name = "角色", notes = "角色编号")
     private Long roleId;
+
+    @ApiModelProperty(name = "区域编号", notes = "区域编号")
+    private Long areaId;
 
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
     private Integer state;

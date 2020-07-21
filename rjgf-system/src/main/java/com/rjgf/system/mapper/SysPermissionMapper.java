@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,19 +34,11 @@ import java.util.List;
  * 系统权限 Mapper 接口
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Mapper
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
-
-    /**
-     * 根据ID获取查询对象
-     *
-     * @param id
-     * @return
-     */
-    SysPermissionQueryVo getSysPermissionById(Serializable id);
 
     /**
      * 获取分页对象

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUserRole对象", description = "系统用户")
+@ApiModel(value = "SysUserRole对象", description = "系统用户-角色")
 public class SysUserRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

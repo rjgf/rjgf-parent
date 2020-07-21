@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * 系统权限树形列表VO
  *
- * @author geekidea
+ * @author xula
  * @date 2019-10-26
  **/
 @Data
@@ -46,6 +46,9 @@ public class SysPermissionTreeVo implements Serializable {
 
     @ApiModelProperty(value = "父id")
     private Long parentId;
+
+    @ApiModelProperty(value = "父类集合")
+    private String parentIds;
 
     @ApiModelProperty(value = "组件")
     private String component;

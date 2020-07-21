@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ * Copyright 2019-2029 xula(https://github.com/xula)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.rjgf.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.rjgf.common.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -34,13 +35,14 @@ import javax.validation.constraints.Null;
  * 部门
  * </pre>
  *
- * @author geekidea
+ * @author xula
  * @since 2019-10-24
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysDepartment对象", description = "部门")
+@TableName("sys_dept")
 public class SysDepartment extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -49,24 +51,22 @@ public class SysDepartment extends BaseEntity {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "部门名称")
+    @ApiModelProperty(value = "部门名称",required = true)
     @NotBlank(message = "部门名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "父id")
+    @ApiModelProperty(value = "父id",required = true)
     private Long parentId;
 
-    @ApiModelProperty(value = "状态，0：禁用，1：启用")
-    private Integer state;
+    @ApiModelProperty(value = "谱图信息，以逗号分隔")
+    private String parentIds;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
-    @ApiModelProperty(value = "备注")
-    private String remark;
+    @ApiModelProperty(value = "部门等级")
+    private Integer level;
 
-    @ApiModelProperty(value = "版本")
-    @Null(message = "版本不用传")
-    @Version
-    private Integer version;
+    @ApiModelProperty(value = "状态，0：禁用，1：启用")
+    private Integer state;
 }
