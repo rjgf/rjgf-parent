@@ -1,10 +1,8 @@
 package com.rjgf.common.common.aop;
 
-import com.mysql.jdbc.log.LogUtils;
 import com.rjgf.common.common.annotation.MineRequiresPermissions;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.aop.AuthorizingAnnotationHandler;
 import org.apache.shiro.subject.Subject;
 

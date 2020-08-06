@@ -36,10 +36,6 @@ public class UpdateSysUserParam implements Serializable {
     @ApiModelProperty(value = "昵称")
     private String realName;
 
-    @ApiModelProperty(value = "密码")
-    @NotBlank(message = "密码不能为空")
-    private String password;
-
     @ApiModelProperty(value = "手机号码")
     @NotBlank(message = "手机号码不能为空")
     private String phone;
@@ -47,15 +43,12 @@ public class UpdateSysUserParam implements Serializable {
     @ApiModelProperty(value = "性别，0：女，1：男，默认1")
     private Integer gender;
 
-    @ApiModelProperty(value = "头像")
-    private String head;
-
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
     private Integer state;
 
     @ApiModelProperty(value = "部门id")
-    @NotNull(message = "部门id不能为空")
-    private Long departmentId;
+//    @NotNull(message = "部门id不能为空")
+    private Long departmentId = 1l;
 
     @ApiModelProperty(value = "角色id列表")
     @NotEmpty(message = "角色集合不能为空")

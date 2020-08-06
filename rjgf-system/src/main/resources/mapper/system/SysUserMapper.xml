@@ -34,7 +34,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_name, real_name, phone,email, gender, head, remark, state, department_id, deleted, version, create_time, update_time
+        id, user_name, real_name, phone,email, gender, remark, state, dept_id, deleted, create_time, update_time
     </sql>
 
 

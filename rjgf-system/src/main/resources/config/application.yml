@@ -218,7 +218,7 @@ mybatis-plus:
 ---
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       filter:
         slf4j:
@@ -259,6 +259,7 @@ spring:
 ---
 spring:
   redis:
+    database: 1
     timeout: 10s
     lettuce:
       pool:

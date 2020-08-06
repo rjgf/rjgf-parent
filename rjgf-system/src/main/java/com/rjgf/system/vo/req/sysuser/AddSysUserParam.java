@@ -44,8 +44,8 @@ public class AddSysUserParam implements Serializable {
     private Integer state;
 
     @ApiModelProperty(value = "部门id",required = true)
-    @NotNull(message = "部门id不能为空")
-    private Long deptId;
+//    @NotNull(message = "部门id不能为空")
+    private Long deptId = 1l;
 
     @ApiModelProperty(value = "角色id列表",required = true)
     @NotEmpty(message = "角色集合不能为空")

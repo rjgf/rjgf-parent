@@ -56,9 +56,6 @@ public class SysUserInfoQueryVo implements Serializable {
     @ApiModelProperty(value = "性别，0：女，1：男，默认1")
     private Integer gender;
 
-    @ApiModelProperty(value = "头像")
-    private String head;
-
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
     private Integer state;
 

@@ -48,6 +48,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -170,6 +172,12 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
 
     @Override
     public boolean isExistsByUsername(String username) throws Exception {
+
+
+
+
+
+
         SysUser selectSysUser = new SysUser().setUserName(username);
         return sysUserMapper.selectCount(new QueryWrapper<>(selectSysUser)) > 0;
     }
