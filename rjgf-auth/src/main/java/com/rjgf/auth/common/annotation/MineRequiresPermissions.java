@@ -1,4 +1,4 @@
-package com.rjgf.common.common.annotation;
+package com.rjgf.auth.common.annotation;
 
 import org.apache.shiro.authz.annotation.Logical;
 

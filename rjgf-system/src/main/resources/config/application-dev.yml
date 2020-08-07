@@ -1,6 +1,6 @@
 spring-boot-plus:
 server:
-  port: 8888
+  port: 8881
   servlet:
     context-path: /
 spring:

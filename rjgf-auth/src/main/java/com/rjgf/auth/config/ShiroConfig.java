@@ -17,6 +17,8 @@
 package com.rjgf.auth.config;
 
 import cn.hutool.json.JSONUtil;
+import com.rjgf.common.core.properties.ShiroPermissionProperties;
+import com.rjgf.common.core.properties.ShiroProperties;
 import com.rjgf.common.core.properties.SpringBootPlusFilterProperties;
 import com.rjgf.common.filter.RequestPathFilter;
 import com.rjgf.common.core.properties.JwtProperties;

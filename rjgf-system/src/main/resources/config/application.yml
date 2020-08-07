@@ -52,7 +52,7 @@ spring-boot-plus:
   filter:
     # 请求路径Filter配置
     request-path:
-      enabled: true
+      enabled: false
       include-paths: /**
       # 排除路径，多行字符串配置
       exclude-paths: |
@@ -135,7 +135,7 @@ spring-boot-plus:
   ######################## Spring Shiro start ########################
   shiro:
     # 是否启用
-    enable: true
+    enable: false
     # shiro ini 多行字符串配置
     filter-chain-definitions: |
       /=anon

@@ -32,6 +32,7 @@ import com.rjgf.system.service.ISysRolePermissionService;
 import com.rjgf.system.service.ISysRoleService;
 import com.rjgf.system.vo.req.sysrole.SysRolePermissionParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +101,9 @@ public class SysRolePermissionServiceImpl extends CommonServiceImpl<SysRolePermi
             if (!deleteResult) {
                 throw new DaoException("删除角色权限关系失败");
             }
+        }
+        if (CollectionUtils.isEmpty(addSet)) {
+            return true;
         }
         // 新增权限关联
         boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);

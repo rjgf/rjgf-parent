@@ -71,6 +71,11 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveSysPermission(SysPermission sysPermission) throws Exception {
+        // 判断权限标识是否存在
+        String code = sysPermission.getCode();
+        if (isExistPermissionCode(code)) {
+            throw new BusinessException("权限标识已存在！");
+        }
         int level = 1;
         String parentIds = sysPermission.getParentIds();
         if (StringUtils.isNotEmpty(parentIds)) {
@@ -84,6 +89,10 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateSysPermission(SysPermission sysPermission) throws Exception {
+        String code = sysPermission.getCode();
+        if (isExistPermissionCode(code)) {
+            throw new BusinessException("权限标识已存在！");
+        }
         // 获取权限
         SysPermission updateSysPermission = getById(sysPermission.getId());
         if (updateSysPermission == null) {
@@ -227,5 +236,16 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
         if (!result) {
             throw new DaoException("数据操作异常！");
         }
+    }
+
+    /**
+     * 判断是否存在code
+     * @param code
+     * @return
+     */
+    private boolean isExistPermissionCode(String code) {
+        SysPermission sysPermission = this.getOne(Wrappers.<SysPermission>lambdaQuery().eq(SysPermission::getCode,code)
+                .eq(SysPermission::getState,StateEnum.ENABLE.getCode()));
+        return null != sysPermission ;
     }
 }

@@ -20,6 +20,7 @@ package com.rjgf.auth.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.IdUtil;
+import com.rjgf.auth.common.annotation.MineRequiresPermissions;
 import com.rjgf.auth.vo.LoginSysUserRedisVo;
 import com.rjgf.auth.vo.resp.ImgCode;
 import com.rjgf.common.common.annotation.ApiRestController;
@@ -113,5 +114,10 @@ public class LoginController {
     }
 
 
+    @MineRequiresPermissions("test")
+    @GetMapping("/test")
+    public void test() {
+        System.out.println("======================");
+    }
 }
 

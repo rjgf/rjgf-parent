@@ -1,6 +1,6 @@
-package com.rjgf.common.common.aop;
+package com.rjgf.auth.common.aop;
 
-import com.rjgf.common.common.annotation.MineRequiresPermissions;
+import com.rjgf.auth.common.annotation.MineRequiresPermissions;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.aop.AuthorizingAnnotationHandler;
@@ -20,7 +20,7 @@ public class MinePermissionAnnotationHandler extends AuthorizingAnnotationHandle
 
     /**
      * Default no-argument constructor that ensures this handler looks for
-     * {@link com.rjgf.common.common.annotation.MineRequiresPermissions RequiresPermissions} annotations.
+     * {@link com.rjgf.auth.common.annotation.MineRequiresPermissions RequiresPermissions} annotations.
      */
     public MinePermissionAnnotationHandler() {
         super(MineRequiresPermissions.class);
