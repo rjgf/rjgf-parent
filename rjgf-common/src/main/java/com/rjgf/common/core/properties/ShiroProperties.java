@@ -39,6 +39,11 @@ public class ShiroProperties {
     private boolean enable;
 
     /**
+     * 是否启用注解控制
+     */
+    private boolean enableAnnotation;
+
+    /**
      * 路径权限配置
      */
     private String filterChainDefinitions;

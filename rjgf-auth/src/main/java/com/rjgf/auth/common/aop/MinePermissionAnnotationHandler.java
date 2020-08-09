@@ -1,12 +1,17 @@
 package com.rjgf.auth.common.aop;
 
 import com.rjgf.auth.common.annotation.MineRequiresPermissions;
+import com.rjgf.auth.util.LoginUtil;
+import com.rjgf.auth.util.ShiroUtil;
+import com.rjgf.common.constant.SystemConstant;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.aop.AuthorizingAnnotationHandler;
 import org.apache.shiro.subject.Subject;
 
 import java.lang.annotation.Annotation;
+import java.util.Set;
 
 /**
  * 实现 MinePermission 注解的处理类
@@ -16,7 +21,6 @@ import java.lang.annotation.Annotation;
  * @time: 10:52
  */
 public class MinePermissionAnnotationHandler extends AuthorizingAnnotationHandler {
-
 
     /**
      * Default no-argument constructor that ensures this handler looks for
@@ -44,8 +48,9 @@ public class MinePermissionAnnotationHandler extends AuthorizingAnnotationHandle
     @Override
     public void assertAuthorized(Annotation a) throws AuthorizationException {
         // 如果是系统用户直接跳过权限的认证
-        if (true) {
-            return;
+        Set<String> roleCodes = LoginUtil.getRoleCodes();
+        if (CollectionUtils.isNotEmpty(roleCodes)) {
+            if (roleCodes.contains(SystemConstant.SYSTEM_CODE)) return;
         }
         if (!(a instanceof MineRequiresPermissions)) return;
         MineRequiresPermissions rpAnnotation = (MineRequiresPermissions) a;

@@ -17,6 +17,7 @@
 package com.rjgf.auth.config;
 
 import cn.hutool.json.JSONUtil;
+import com.rjgf.auth.common.aop.MinePermissionAdvisor;
 import com.rjgf.common.core.properties.ShiroPermissionProperties;
 import com.rjgf.common.core.properties.ShiroProperties;
 import com.rjgf.common.core.properties.SpringBootPlusFilterProperties;
@@ -301,11 +302,12 @@ public class ShiroConfig {
         return new LifecycleBeanPostProcessor();
     }
 
+
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager,ShiroProperties shiroProperties) {
+        MinePermissionAdvisor authorizationAttributeSourceAdvisor = new MinePermissionAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        authorizationAttributeSourceAdvisor.setShiroProperties(shiroProperties);
         return authorizationAttributeSourceAdvisor;
     }
-
 }

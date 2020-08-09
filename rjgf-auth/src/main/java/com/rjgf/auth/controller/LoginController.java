@@ -35,6 +35,7 @@ import com.rjgf.auth.vo.resp.LoginSysUserTokenVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -111,13 +112,6 @@ public class LoginController {
         // 缓存到Redis
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, uuid), code, 5, TimeUnit.MINUTES);
         return R.ok(imgCode);
-    }
-
-
-    @MineRequiresPermissions("test")
-    @GetMapping("/test")
-    public void test() {
-        System.out.println("======================");
     }
 }
 

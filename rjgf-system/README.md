@@ -49,19 +49,56 @@
 
 3. 使用 swagger 生成 api 文档
 
-   地址：http://localhost:8888/swagger-ui.html#/
+   * 地址：**http://localhost:8888/swagger-ui.html#/** 
+   * **注意：修改成自己的端口**
 
-   命名规范:
-    1. 路由地址不能出现动词
-   例子：
-   
-   /sys/dept post
+4. 路由配置，遵循 `RESTful` 风格
 
-   **注意：修改成自己的端口**
+   * 命名规范:
 
-4. 自定义拦截器
+     路由地址不能出现动词
 
-   
+   分页或者不分页获取多条数据不采用`get`方法，如果不带条件的使用 `get` 方式
+
+   > 如果查询条件多而复杂，使用`get`请求需要将查询条件拼接到url后面这样会因为`url`长度过长导致报错，所以把查询条件包裹再`json`体中通过post方式提交。所以个人自作主张做了一些规定，如果获取数据分页或者不分页，使用 `list/page` 来标识他是做啥的
+
+   | url                  | method | commet             |
+   | -------------------- | ------ | ------------------ |
+   | /sys/department/{id} | get    | 获取单条数据       |
+   | /sys/department      | post   | 添加部门           |
+   | /sys/department      | put    | 修改部门           |
+   | /sys/department/{id} | delete | 删除部门           |
+   | /sys/department/list | post   | 非分页获取部们数据 |
+   | /sys/department/page | post   | 分页获取部们数据   |
+
 
 ## 使用说明
+
+1. 目前由于shiro本身的一些权限注解没有设置全局控制，只能通过不创建以下几个bean实现
+
+   * LifecycleBeanPostProcessor
+   * AuthorizationAttributeSourceAdvisor
+
+   但是我不想这么做，自定义`Advisor`来实现注解全局控制，通过修改配置文件实现。。。
+
+   ```
+    shiro:
+       # 是否启用
+       enable: false # 不启用的话就不会进行token认证
+       enableAnnotation: false # 注解是否启用，不启用则shiro的一些注解不可用
+   ```
+
+   **建议以后权限控制使用 `MineRequiresPermissions`  注解**
+
+   使用例子：
+
+   ```
+   @MineRequiresPermissions("test") # 此注解和 RequiresPermissions 功能一致
+   @GetMapping("/test")
+   public void test() {
+   	System.out.println("======================");
+   }
+   ```
+
+   
 
