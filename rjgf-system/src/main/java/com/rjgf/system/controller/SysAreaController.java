@@ -33,7 +33,6 @@ public class SysAreaController extends BaseController {
      * 获取省市区的树形列表
      */
     @PostMapping("/tree")
-//    @RequiresPermissions("sys:area:tree")
     @ApiOperation(value = "获取省市区的树形列表", notes = "获取省市区的树形列表，权限路径(sys:area:tree)")
     public R<List<SysAreaTreeVo>> getAllSysAreaTreeVo() {
         List<SysAreaTreeVo> treeVos = iSysAreaService.getSysAreaTree();

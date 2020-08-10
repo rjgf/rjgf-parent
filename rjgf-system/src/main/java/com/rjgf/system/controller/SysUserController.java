@@ -133,7 +133,7 @@ public class SysUserController extends BaseController {
      * 启用用户
      */
     @PutMapping("/state/enable/{id}")
-//    @RequiresPermissions("sys:user:state:enable")
+    @RequiresPermissions("sys:user:state:enable")
     @ApiOperation(value = "启用用户", notes = "启用用户,权限路径(sys:user:state:enable)")
     public R stateEnable(@PathVariable("id") Long id) {
         sysUserService.changeUserState(id, StateEnum.ENABLE.getCode());
@@ -144,13 +144,11 @@ public class SysUserController extends BaseController {
      * 停用用户
      */
     @PutMapping("/state/disable/{id}")
-//    @RequiresPermissions("sys:user:state:enable")
+    @RequiresPermissions("sys:user:state:enable")
     @ApiOperation(value = "停用用户", notes = "停用用户,权限路径(sys:user:state:disable)")
     public R stateDisable(@PathVariable("id") Long id) {
         sysUserService.changeUserState(id,StateEnum.DISABLE.getCode());
         return R.ok("");
     }
-
-
 }
 

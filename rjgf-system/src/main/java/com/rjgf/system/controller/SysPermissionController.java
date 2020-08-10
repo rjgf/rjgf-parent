@@ -108,7 +108,6 @@ public class SysPermissionController extends BaseController {
      * 获取当前用户的权限树
      */
     @GetMapping("/user/tree")
-//    @RequiresPermissions("sys:permission:user:tree")
     @ApiOperation(value = "当前用户的权限树", notes = "当前用户的权限树，权限路径(sys:permission:user:tree)")
     public R<List<SysPermissionTreeVo>> getUserMenuTree() throws Exception {
         List<SysPermissionTreeVo> treeVos = sysPermissionService.getMenuTreeByUserId(LoginUtil.getUserId());
@@ -119,7 +118,7 @@ public class SysPermissionController extends BaseController {
      * 启用菜单
      */
     @PutMapping("/state/enable/{id}")
-//    @RequiresPermissions("sys:permission:state:enable")
+    @RequiresPermissions("sys:permission:state:enable")
     @ApiOperation(value = "启用菜单", notes = "启用菜单，权限路径(sys:permission:state:enable)")
     public R stateEnable(@PathVariable("id") Long id) {
         sysPermissionService.changeMenuState(id, StateEnum.ENABLE.getCode());
@@ -130,7 +129,7 @@ public class SysPermissionController extends BaseController {
      * 停用菜单
      */
     @PutMapping("/state/disable/{id}")
-//    @RequiresPermissions("sys:permission:state:disable")
+    @RequiresPermissions("sys:permission:state:disable")
     @ApiOperation(value = "停用菜单", notes = "停用菜单，权限路径(sys:permission:state:disable)")
     public R stateDisable(@PathVariable("id") Long id) {
         sysPermissionService.changeMenuState(id,StateEnum.DISABLE.getCode());

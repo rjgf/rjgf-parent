@@ -145,7 +145,7 @@ public class SysRoleController extends BaseController {
      * 添加/更新 角色权限
      */
     @PutMapping("/permission/{id}")
-//    @RequiresPermissions("sys:role:permissions:update")
+    @RequiresPermissions("sys:role:permissions:update")
     @ApiOperation(value = "更新角色权限", notes = "更新角色权限,权限路径(sys:role:permissions:update)")
     public R updateRolePermissions(@PathVariable("id") Long id, @Valid @RequestBody SysRolePermissionParam sysRolePermissionParam) throws Exception {
         iSysRolePermissionService.updateSysRolePermission(sysRolePermissionParam.setRoleId(id));
@@ -156,7 +156,7 @@ public class SysRoleController extends BaseController {
      * 启用角色
      */
     @PutMapping("/state/enable/{id}")
-//    @RequiresPermissions("sys:role:state:enable")
+    @RequiresPermissions("sys:role:state:enable")
     @ApiOperation(value = "启用角色", notes = "启用角色,权限路径 (sys:role:state:enable)")
     public R stateEnable(@PathVariable("id") Long id) {
         sysRoleService.changeRoleState(id, StateEnum.ENABLE.getCode());
@@ -167,7 +167,7 @@ public class SysRoleController extends BaseController {
      * 停用角色
      */
     @PutMapping("/state/disable/{id}")
-//    @RequiresPermissions("sys:role:state:disable")
+    @RequiresPermissions("sys:role:state:disable")
     @ApiOperation(value = "停用角色", notes = "停用角色,权限路径 (sys:role:state:disable)")
     public R stateDisable(@PathVariable("id") Long id) {
         sysRoleService.changeRoleState(id,StateEnum.DISABLE.getCode());
@@ -175,10 +175,10 @@ public class SysRoleController extends BaseController {
     }
 
     /**
-     * 停用角色
+     * 获取角色用户列表
      */
     @GetMapping("/users/{id}")
-//    @RequiresPermissions("sys:role:users")
+    @RequiresPermissions("sys:role:users")
     @ApiOperation(value = "获取角色用户列表", notes = "获取角色用户列表,权限路径 (sys:role:users)")
     public R<List<SysUsersRoleVo>> roleUsers(@PathVariable("id") Long id) {
         List<SysUsersRoleVo> sysUsers = userRoleService.getSysUserListByRole(id);
@@ -190,7 +190,7 @@ public class SysRoleController extends BaseController {
      * 停用角色
      */
     @PutMapping("/users/{id}")
-//    @RequiresPermissions("sys:role:users:update")
+    @RequiresPermissions("sys:role:users:update")
     @ApiOperation(value = "更新角色用户信息", notes = "更新角色用户信息,权限路径 (sys:role:users:update)")
     public R roleUsersUpdate(@PathVariable("id") Long id, @RequestBody SysRoleUsersParam sysRoleUsersParam) {
         boolean result = userRoleService.addRoleUsers(id,sysRoleUsersParam.getUserIds());
