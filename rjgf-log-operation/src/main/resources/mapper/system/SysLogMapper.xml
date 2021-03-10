@@ -20,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        log_id,req_ip,req_url,user_name,status,title,create_id, create_time
+        id,req_ip,req_url,user_name,state,title,create_by, create_time
     </sql>
 
     <select id="getSysLogById" resultType="com.rjgf.log.vo.resp.SysLogQueryVo">
@@ -33,6 +33,18 @@
         select
         <include refid="Base_Column_List"/>
         from sys_log
+        <where>
+            deleted = 0
+            <if test="param.userName != null and param.userName != '' ">
+                AND user_name = #{param.userName}
+            </if>
+            <if test="param.startTime != null and param.endTime != null ">
+                AND create_time between #{param.startTime} and #{param.endTime}
+            </if>
+            <if test="param.state != null">
+                AND state = #{param.state}
+            </if>
+        </where>
     </select>
 
 </mapper>

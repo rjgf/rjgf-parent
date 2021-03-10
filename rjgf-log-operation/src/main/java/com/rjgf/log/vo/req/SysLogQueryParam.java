@@ -18,9 +18,13 @@ package com.rjgf.log.vo.req;
 
 import com.rjgf.common.common.api.req.PageParam;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -35,5 +39,18 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "SysLogQueryParam对象", description = "系统日志查询参数")
 public class SysLogQueryParam extends PageParam {
+
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty("用户名")
+    private String userName;
+
+    @ApiModelProperty("操作开始时间")
+    private Date startTime;
+
+    @ApiModelProperty("操作结束时间")
+    private Date endTime;
+
+    @ApiModelProperty("操作状态")
+    private Integer state;
 }

@@ -41,25 +41,22 @@ public class SysLogQueryVo implements Serializable {
     @ApiModelProperty(value = "主键")
     private Long id;
 
-    @ApiModelProperty(value = "内容")
-    private String content;
+    @ApiModelProperty(value = "操作内容")
+    private String title;
 
     @ApiModelProperty(value = "创建人ID")
     private Long createId;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "操作时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "标题")
-    private String title;
-
-    @ApiModelProperty(value = "请求的url")
+    @ApiModelProperty(value = "访问链接")
     private String reqUrl;
 
     @ApiModelProperty(value = "用户访问的ip地址")
     private String reqIp;
 
-    @ApiModelProperty(value = "用户执行状态")
+    @ApiModelProperty(value = "操作状态 0:失败 1:成功")
     private Integer state;
 
     @ApiModelProperty(value = "用户名")

@@ -17,13 +17,11 @@
 package com.rjgf.log.service;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rjgf.common.service.CommonService;
 import com.rjgf.log.entity.SysLog;
 import com.rjgf.log.vo.req.SysLogQueryParam;
 import com.rjgf.log.vo.resp.SysLogQueryVo;
-
 
 import java.io.Serializable;
 
