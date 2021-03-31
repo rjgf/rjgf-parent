@@ -42,7 +42,7 @@
         <ini4j.version>0.5.4</ini4j.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
         <jansi.version>1.18</jansi.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <commons-pool2.version>2.7.0</commons-pool2.version>
         <commons-i.version>2.6</commons-i.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
