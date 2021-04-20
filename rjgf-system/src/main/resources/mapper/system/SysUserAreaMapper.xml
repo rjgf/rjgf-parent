@@ -6,6 +6,6 @@
     <select id="getSysAreaList" resultType="com.rjgf.system.entity.SysArea">
         SELECT r.*
         FROM sys_user_area s LEFT JOIN sys_area r ON (s.area_id = r.id)
-        WHERE s.user_id = #{userId}
+        WHERE s.user_id = #{userId} and s.deleted = '0'
     </select>
 </mapper>

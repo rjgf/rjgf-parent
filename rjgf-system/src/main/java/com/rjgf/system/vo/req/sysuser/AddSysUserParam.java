@@ -35,6 +35,8 @@ public class AddSysUserParam implements Serializable {
     private String password;
 
     @ApiModelProperty(value = "手机号码")
+    @NotBlank(message = "手机号码不能为空")
+    @Pattern(message = "手机号格式错误",regexp = "^1[3456789]\\d{9}$")
     private String phone;
 
     @ApiModelProperty(value = "性别，0：女，1：男，默认1",required = true)

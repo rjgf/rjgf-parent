@@ -18,6 +18,8 @@ package com.rjgf.common.config.converter;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.regex.Pattern;
+
 /**
  * <code>
  * <pre>
@@ -31,10 +33,22 @@ import org.apache.commons.lang3.StringUtils;
 public class StringToIntegerUtil {
 
 	public static Integer convert(String source) {
+		Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");//匹配字符串是否为数字
 		if (StringUtils.isBlank(source)){
 			return null;
 		}
-		Integer i = Integer.parseInt(source);
-		return i;
+		if (pattern.matcher(source).matches()) {
+			Integer i = Integer.parseInt(source);
+			return i;
+		}
+		return null;
 	}
+
+//    public static Integer convert(String source) {
+//        if (StringUtils.isBlank(source)){
+//            return null;
+//        }
+//        Integer i = Integer.parseInt(source);
+//        return i;
+//    }
 }
