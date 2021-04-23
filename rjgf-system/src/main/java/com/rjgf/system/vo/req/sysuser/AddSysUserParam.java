@@ -59,6 +59,10 @@ public class AddSysUserParam implements Serializable {
 //    @Size(max = 4, message = "城市配置超过上限")
     private List<Integer> areaIds;
 
+    @ApiModelProperty(value = "邮箱",required = true)
+    @Email(message = "邮箱格式不正确")
+    private String email;
+
     @ApiModelProperty(value = "备注")
     private String remark;
 }

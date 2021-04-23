@@ -136,6 +136,7 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
                 .setPhone(updateSysUserParam.getPhone())
                 .setGender(updateSysUserParam.getGender())
                 .setState(updateSysUserParam.getState())
+                .setEmail(updateSysUserParam.getEmail())
                 .setDeptId(updateSysUserParam.getDepartmentId())
                 .setRemark(updateSysUserParam.getRemark());
 

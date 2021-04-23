@@ -5,10 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -57,6 +54,10 @@ public class UpdateSysUserParam implements Serializable {
     @ApiModelProperty(value = "城市配置列表")
     @NotEmpty(message = "城市配置不能为空")
     private List<Integer> areaIds;
+
+    @ApiModelProperty(value = "邮箱",required = true)
+    @Email(message = "邮箱格式不正确")
+    private String email;
 
     @ApiModelProperty(value = "备注")
     private String remark;
