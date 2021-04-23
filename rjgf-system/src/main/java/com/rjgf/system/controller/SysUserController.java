@@ -17,11 +17,14 @@
 package com.rjgf.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rjgf.common.common.annotation.ApiRestController;
 import com.rjgf.common.common.api.R;
 import com.rjgf.common.common.api.resp.PageResponse;
 import com.rjgf.common.common.controller.BaseController;
 import com.rjgf.common.enums.StateEnum;
+import com.rjgf.system.entity.SysArea;
+import com.rjgf.system.service.ISysAreaService;
 import com.rjgf.system.service.ISysUserService;
 import com.rjgf.system.vo.req.SysUserQueryParam;
 import com.rjgf.system.vo.req.UpdatePasswordParam;
@@ -36,6 +39,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -51,6 +57,7 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private ISysUserService sysUserService;
+
 
     /**
      * 添加系统用户

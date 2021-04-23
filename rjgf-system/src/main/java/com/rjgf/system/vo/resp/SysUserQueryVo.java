@@ -68,7 +68,7 @@ public class SysUserQueryVo implements Serializable {
     private Integer state;
 
     @ApiModelProperty(value = "部门id")
-    private Long departmentId;
+    private Long deptId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

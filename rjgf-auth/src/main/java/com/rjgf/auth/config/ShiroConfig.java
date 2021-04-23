@@ -17,18 +17,18 @@
 package com.rjgf.auth.config;
 
 import cn.hutool.json.JSONUtil;
-import com.rjgf.auth.common.aop.MinePermissionAdvisor;
-import com.rjgf.common.core.properties.ShiroPermissionProperties;
-import com.rjgf.common.core.properties.ShiroProperties;
-import com.rjgf.common.core.properties.SpringBootPlusFilterProperties;
-import com.rjgf.common.filter.RequestPathFilter;
-import com.rjgf.common.core.properties.JwtProperties;
 import com.rjgf.auth.cache.LoginRedisService;
+import com.rjgf.auth.common.aop.MinePermissionAdvisor;
 import com.rjgf.auth.exception.ShiroConfigException;
 import com.rjgf.auth.jwt.JwtCredentialsMatcher;
 import com.rjgf.auth.jwt.JwtFilter;
 import com.rjgf.auth.jwt.JwtRealm;
 import com.rjgf.auth.service.AuthService;
+import com.rjgf.common.core.properties.JwtProperties;
+import com.rjgf.common.core.properties.ShiroPermissionProperties;
+import com.rjgf.common.core.properties.ShiroProperties;
+import com.rjgf.common.core.properties.SpringBootPlusFilterProperties;
+import com.rjgf.common.filter.RequestPathFilter;
 import com.rjgf.common.util.IniUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -42,13 +42,13 @@ import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionStorageEvaluator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
-import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -298,8 +298,8 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+       return new LifecycleBeanPostProcessor();
     }
 
 

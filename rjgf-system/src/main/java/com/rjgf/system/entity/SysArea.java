@@ -35,6 +35,9 @@ public class SysArea extends BaseEntity {
     @ApiModelProperty(value = "父级")
     private Integer parentId;
 
+    @ApiModelProperty(value = "城市code")
+    private String code;
+
     @ApiModelProperty(value = "谱图 记录层级")
     private String path;
 

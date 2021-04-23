@@ -37,6 +37,7 @@ import com.rjgf.system.service.ISysRolePermissionService;
 import com.rjgf.system.vo.req.SysPermissionQueryParam;
 import com.rjgf.system.vo.resp.SysPermissionQueryVo;
 import com.rjgf.system.vo.resp.SysPermissionTreeVo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +61,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMapper, SysPermission> implements ISysPermissionService {
 
     @Autowired
@@ -90,11 +92,11 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
     @Override
     public boolean updateSysPermission(SysPermission sysPermission) throws Exception {
         String code = sysPermission.getCode();
-        if (isExistPermissionCode(code)) {
-            throw new BusinessException("权限标识已存在！");
-        }
         // 获取权限
         SysPermission updateSysPermission = getById(sysPermission.getId());
+        if (!updateSysPermission.getCode().equals(code) && isExistPermissionCode(code)) {
+            throw new BusinessException("权限标识已存在！");
+        }
         if (updateSysPermission == null) {
             throw new BusinessException("权限不存在");
         }
@@ -142,7 +144,9 @@ public class SysPermissionServiceImpl extends CommonServiceImpl<SysPermissionMap
 
     @Override
     public boolean isExistsByPermissionIds(List<Long> permissionIds) {
-        LambdaQueryWrapper queryWrapper = Wrappers.<SysPermission>lambdaQuery().in(SysPermission::getId,permissionIds);
+        Set<Long> newPermissionIds = new HashSet<>();
+        newPermissionIds.addAll(permissionIds);
+        LambdaQueryWrapper queryWrapper = Wrappers.<SysPermission>lambdaQuery().in(SysPermission::getId,newPermissionIds);
         return sysPermissionMapper.selectCount(queryWrapper).intValue() == permissionIds.size();
     }
 

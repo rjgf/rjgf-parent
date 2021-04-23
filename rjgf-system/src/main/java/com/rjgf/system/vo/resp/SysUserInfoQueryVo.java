@@ -63,8 +63,8 @@ public class SysUserInfoQueryVo implements Serializable {
     private Long departmentId;
 
     @ApiModelProperty(value = "角色列表")
-    private List<SysRole> sysRoles;
+    private List<Long> sysRoles;
 
     @ApiModelProperty(value = "城市配置列表")
-    private List<SysArea> sysAreas;
+    private List<Integer> sysAreas;
 }

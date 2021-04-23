@@ -1,6 +1,7 @@
 package com.rjgf.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rjgf.common.common.exception.BusinessException;
@@ -43,6 +44,7 @@ public class SysUserRoleServiceImpl extends CommonServiceImpl<SysUserRoleMapper,
         return this.baseMapper.getSysRoleList(userId);
     }
 
+
     @Override
     public boolean addUserRole(Long userId, List<Long> roleIds) {
         List<SysUserRole> sysUserRoleList = roleIds.stream().map(roleId -> {
@@ -51,9 +53,8 @@ public class SysUserRoleServiceImpl extends CommonServiceImpl<SysUserRoleMapper,
             sysUserRole.setUserId(userId);
             return sysUserRole;
         }).collect(Collectors.toList());
-        QueryWrapper queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
-        baseMapper.delete(queryWrapper);
+        // 删除用户下的角色
+        baseMapper.delete(Wrappers.<SysUserRole>lambdaUpdate().eq(SysUserRole::getUserId,userId));
         return saveOrUpdateBatch(sysUserRoleList);
     }
 

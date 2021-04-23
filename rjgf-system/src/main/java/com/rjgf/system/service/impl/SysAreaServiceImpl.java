@@ -8,9 +8,11 @@ import com.rjgf.system.entity.SysArea;
 import com.rjgf.system.mapper.SysAreaMapper;
 import com.rjgf.system.service.ISysAreaService;
 import com.rjgf.system.vo.resp.SysAreaTreeVo;
-import io.swagger.models.auth.In;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.interceptor.CacheInterceptor;
+import org.springframework.cache.interceptor.CacheOperationSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +25,14 @@ import java.util.List;
  * @author xula
  * @since 2020-02-13
  */
+@CacheConfig(cacheNames = "my-redis-cache2")
 @Service
 public class SysAreaServiceImpl extends CommonServiceImpl<SysAreaMapper, SysArea> implements ISysAreaService {
 
+    @Cacheable
     @Override
     public List<SysAreaTreeVo> getSysAreaTree() {
-        List<SysArea> sysAreas = getBaseSysArea(18);
+        List<SysArea> sysAreas = getBaseSysArea(21);
         return convertSysArea(sysAreas);
     }
 

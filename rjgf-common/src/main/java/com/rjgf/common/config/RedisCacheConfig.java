@@ -22,6 +22,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -38,6 +39,7 @@ import java.util.*;
  */
 @Configuration
 @EnableCaching
+@Order(0)
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Bean
@@ -67,11 +69,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         Set<String> cacheNames =  new HashSet<>();
         cacheNames.add("my-redis-cache1");
         cacheNames.add("my-redis-cache2");
+//        cacheNames.add("redis-cache-day");
 
         // 对每个缓存空间应用不同的配置
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         configMap.put("my-redis-cache1", config);
         configMap.put("my-redis-cache2", config.entryTtl(Duration.ofSeconds(120)));
+//        configMap.put("redis-cache-day", config.entryTtl(Duration.ofDays(1)));
 
         // 使用自定义的缓存配置初始化一个cacheManager
         RedisCacheManager cacheManager = RedisCacheManager.builder(factory)

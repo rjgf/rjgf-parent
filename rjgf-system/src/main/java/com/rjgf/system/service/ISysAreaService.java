@@ -21,5 +21,5 @@ public interface ISysAreaService extends CommonService<SysArea> {
      * 获取省市区树
      * @return
      */
-    List<SysAreaTreeVo> getSysAreaTree();
+     List<SysAreaTreeVo> getSysAreaTree();
 }

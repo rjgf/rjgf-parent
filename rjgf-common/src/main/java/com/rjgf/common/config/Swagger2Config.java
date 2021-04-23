@@ -18,7 +18,9 @@ package com.rjgf.common.config;
 
 import com.rjgf.common.util.jwt.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -43,6 +45,7 @@ import java.util.List;
  */
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(value = "is-enable", prefix = "swagger")
 public class Swagger2Config {
 
     /**
@@ -87,6 +90,9 @@ public class Swagger2Config {
     @Value("${swagger.contact.email}")
     private String contactEmail;
 
+    @Value("${swagger.group-name}")
+    private String groupName;
+
     /**
      * 版本
      */
@@ -97,11 +103,13 @@ public class Swagger2Config {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
+                //分组名称
+                .groupName(groupName)
                 .select()
+                //这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.basePackage(basePackage))
                 .paths(PathSelectors.any())
-                .build()
-                .globalOperationParameters(setHeaderToken());
+                .build().globalOperationParameters(setHeaderToken());
     }
 
     private ApiInfo apiInfo() {

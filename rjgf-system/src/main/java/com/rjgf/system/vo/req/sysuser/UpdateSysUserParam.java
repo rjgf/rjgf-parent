@@ -47,7 +47,6 @@ public class UpdateSysUserParam implements Serializable {
     private Integer state;
 
     @ApiModelProperty(value = "部门id")
-//    @NotNull(message = "部门id不能为空")
     private Long departmentId = 1l;
 
     @ApiModelProperty(value = "角色id列表")
@@ -57,7 +56,6 @@ public class UpdateSysUserParam implements Serializable {
 
     @ApiModelProperty(value = "城市配置列表")
     @NotEmpty(message = "城市配置不能为空")
-    @Size(max = 4, message = "城市配置超过上限")
     private List<Integer> areaIds;
 
     @ApiModelProperty(value = "备注")

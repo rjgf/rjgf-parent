@@ -31,7 +31,9 @@ import com.rjgf.common.enums.StateEnum;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.common.util.jwt.SaltUtil;
 import com.rjgf.system.convert.SysUserConvert;
+import com.rjgf.system.entity.SysArea;
 import com.rjgf.system.entity.SysPermission;
+import com.rjgf.system.entity.SysRole;
 import com.rjgf.system.entity.SysUser;
 import com.rjgf.system.mapper.SysUserMapper;
 import com.rjgf.system.service.*;
@@ -43,6 +45,8 @@ import com.rjgf.system.vo.resp.SysUserInfoQueryVo;
 import com.rjgf.system.vo.resp.SysUserQueryVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,8 +54,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -69,8 +75,8 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
     @Autowired
     private SysUserMapper sysUserMapper;
 
-//    @Autowired
-//    private ISysDepartmentService sysDepartmentService;
+    @Autowired
+    private ISysAreaService areaService;
 
     @Lazy
     @Autowired
@@ -159,25 +165,38 @@ public class SysUserServiceImpl extends CommonServiceImpl<SysUserMapper, SysUser
     public SysUserInfoQueryVo getSysUserById(Long id) throws Exception {
         SysUserInfoQueryVo sysUserInfoQueryVo =  sysUserMapper.getSysUserById(id);
         // 获取用户的角色
-        sysUserInfoQueryVo.setSysRoles(iSysUserRoleService.getSysUserRoleList(id));
+        List<SysRole> sysRoles = iSysUserRoleService.getSysUserRoleList(id);
+        List<Long> roleIds = sysRoles.stream().map(SysRole::getId).collect(Collectors.toList());
+        sysUserInfoQueryVo.setSysRoles(roleIds);
+        List<SysArea> sysAreas = iSysUserAreaService.getSysUserAreaList(id);
+        List<Integer> areaIds = sysAreas.stream().map(SysArea::getId).collect(Collectors.toList());
         // 获取用户的城市配置
-        sysUserInfoQueryVo.setSysAreas(iSysUserAreaService.getSysUserAreaList(id));
+        sysUserInfoQueryVo.setSysAreas(areaIds);
         return sysUserInfoQueryVo;
     }
 
     @Override
     public IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam) throws Exception {
+        Integer areaId = sysUserQueryParam.getAreaId();
+        if (areaId != null) {
+            // 判断是否是市区
+            SysArea sysArea = areaService.getById(areaId);
+            String code = sysArea.getCode();
+            List<Integer> areaIds = new ArrayList<>();
+            // 判断是不是区县，区县code一般最后两个不为0
+            if (code.lastIndexOf("00") == (code.length() - 2)) {
+                List<SysArea> sysAreas = areaService.list(Wrappers.<SysArea>lambdaQuery().eq(SysArea::getParentId,areaId));
+                areaIds = sysAreas.stream().map(SysArea::getId).collect(Collectors.toList());
+            } else {
+                areaIds.add(areaId);
+            }
+            sysUserQueryParam.setAreaIds(areaIds);
+        }
         return sysUserMapper.getSysUserPageList(sysUserQueryParam.getPage(), sysUserQueryParam);
     }
 
     @Override
     public boolean isExistsByUsername(String username) throws Exception {
-
-
-
-
-
-
         SysUser selectSysUser = new SysUser().setUserName(username);
         return sysUserMapper.selectCount(new QueryWrapper<>(selectSysUser)) > 0;
     }

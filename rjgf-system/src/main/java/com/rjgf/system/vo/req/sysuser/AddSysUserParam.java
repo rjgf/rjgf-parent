@@ -56,7 +56,7 @@ public class AddSysUserParam implements Serializable {
 
     @ApiModelProperty(value = "城市配置列表",required = true)
     @NotEmpty(message = "城市配置不能为空")
-    @Size(max = 4, message = "城市配置超过上限")
+//    @Size(max = 4, message = "城市配置超过上限")
     private List<Integer> areaIds;
 
     @ApiModelProperty(value = "备注")

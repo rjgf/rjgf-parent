@@ -69,15 +69,6 @@ public interface ISysUserService extends CommonService<SysUser> {
     boolean deleteSysUser(Long id) throws Exception;
 
     /**
-     * 根据ID获取查询对象
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    SysUserInfoQueryVo getSysUserById(Long id) throws Exception;
-
-    /**
      * 获取分页对象
      *
      * @param sysUserQueryParam
@@ -85,6 +76,15 @@ public interface ISysUserService extends CommonService<SysUser> {
      * @throws Exception
      */
     IPage<SysUserQueryVo> getSysUserPage(SysUserQueryParam sysUserQueryParam) throws Exception;
+
+    /**
+     * 根据ID获取查询对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    SysUserInfoQueryVo getSysUserById(Long id) throws Exception;
 
     /**
      * 判断用户名是否存在

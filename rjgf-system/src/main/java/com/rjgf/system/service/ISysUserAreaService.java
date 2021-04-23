@@ -21,10 +21,10 @@ public interface ISysUserAreaService extends CommonService<SysUserArea> {
     /**
      * 添加或更新用户角色信息
      * @param userId 用户编号
-     * @param areaIds 城市配置列表
+     * @param codes 城市配置列表
      * @return
      */
-    boolean addUserArea(Long userId, List<Integer> areaIds);
+    boolean addUserArea(Long userId, List<Integer> codes);
 
 
     /**

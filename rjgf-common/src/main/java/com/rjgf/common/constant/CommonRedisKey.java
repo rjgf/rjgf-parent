@@ -49,4 +49,9 @@ public interface CommonRedisKey {
      * 验证码
      */
     String VERIFY_CODE = "verify.code:%s";
+
+    /**
+     * 城市列表
+     */
+    String CITY_LIST = "city:list";
 }

@@ -285,6 +285,8 @@ swagger:
   title: rjgf
   url: ''
   version: 1.0
+  is-enable: true
+  group-name: 1.0.0
 #################################### Swagger end ###################################
 
 

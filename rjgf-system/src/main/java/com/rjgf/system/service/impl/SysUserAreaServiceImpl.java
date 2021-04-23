@@ -2,9 +2,11 @@ package com.rjgf.system.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rjgf.common.service.impl.CommonServiceImpl;
 import com.rjgf.system.entity.SysArea;
 import com.rjgf.system.entity.SysUserArea;
+import com.rjgf.system.entity.SysUserRole;
 import com.rjgf.system.mapper.SysUserAreaMapper;
 import com.rjgf.system.service.ISysUserAreaService;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,7 @@ public class SysUserAreaServiceImpl extends CommonServiceImpl<SysUserAreaMapper,
             sysUserArea.setUserId(userId);
             return sysUserArea;
         }).collect(Collectors.toList());
-        QueryWrapper queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
-        baseMapper.delete(queryWrapper);
+        baseMapper.delete(Wrappers.<SysUserArea>lambdaUpdate().eq(SysUserArea::getUserId,userId));
         return saveBatch(sysUserAreaList);
     }
 

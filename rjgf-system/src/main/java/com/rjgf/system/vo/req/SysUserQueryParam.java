@@ -24,6 +24,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * <pre>
  * 系统用户 查询参数对象
@@ -37,17 +39,24 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
 public class SysUserQueryParam extends PageParam {
+
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(name = "姓名", notes = "用户名字")
     private String realName;
 
-    @ApiModelProperty(name = "角色", notes = "角色编号")
-    private Long roleId;
+    @ApiModelProperty(name = "姓名", notes = "用户名字")
+    private String userName;
+
+//    @ApiModelProperty(name = "角色", notes = "角色编号")
+//    private Long roleId;
+//
+    @ApiModelProperty(name = "区域编号", notes = "区域编号")
+    private Integer areaId;
 
     @ApiModelProperty(name = "区域编号", notes = "区域编号")
-    private Long areaId;
-
-    @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
-    private Integer state;
+    private List<Integer> areaIds;
+//
+//    @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
+//    private Integer state;
 }
