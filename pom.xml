@@ -44,7 +44,7 @@
         <jansi.version>1.18</jansi.version>
         <guava.version>28.1-jre</guava.version>
         <commons-pool2.version>2.7.0</commons-pool2.version>
-        <commons-i.version>2.6</commons-i.version>
+        <commons-i.version>2.7</commons-i.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <poi-tl.version>1.6.0</poi-tl.version>
         <easyexcel.version>2.1.4</easyexcel.version>
